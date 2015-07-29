@@ -1,0 +1,44 @@
+/* Puspose of this file is to extend or override the current styles of the events page */
+
+.recent-events {
+	margin-top: 50px;
+}
+
+.event-wrapper {
+	border-bottom: 1px solid #aeaeae;
+	padding: 10px 0px;
+}
+
+.event-location-wrapper {
+	padding: 15px 0px;
+}
+
+.event-location-wrapper span {
+	display: block;
+	padding: 5px 0px;
+}
+
+.header {
+	font-size: 2em;
+	color: #040004  ;
+}
+
+.button-flat {
+
+	display: inline-block;
+	padding: 15px;
+	text-decoration: none;
+	font-size: 1.1rem;
+	background-color: #5f5650;
+    color: white;  
+}
+
+.button-flat:hover {
+	background-color: #7f7670
+}
+
+.donation-button:hover {
+	background-color: #0B486B;
+	color: #FEFEFE;
+}
+
