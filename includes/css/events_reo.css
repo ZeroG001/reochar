@@ -62,23 +62,33 @@
 		width: 100%;
 	}
 
-	.sidebar-img {
-		display: none;
-	}
-
-	.sidebar {
+	.sidebar-img, .sidebar, .event-sidebar-image {
 		display: none;
 	}
 
 	.event-wrapper {
-		padding: 0px 20px;
+		box-sizing: border-box;
+		padding: 20px;
 	}
 
-	.content .mainbar {
+	.event-wrapper .event-image {
+		width: 100%;
+		height: auto;
+		max-width: 500px;
+		border: 2px solid red;
+		display: block;
+	}
+
+	.event-wrapper h2 {
+		font-size: 1em;
+	}
+
+	.content_resize {
+		max-width: 960px;
 		width: 100%;
 	}
 
-	.content .mainbar .post_content {
+	.content .mainbar .post_content, .content .mainbar {
 		width: 100%;
 	}
 
@@ -87,6 +97,8 @@
 	}
 
 }
+
+
 
 /* Small devices (tablets, 768px and up) */
 

@@ -11,7 +11,7 @@
     <script type="text/javascript" src="includes/pagestorm/js/cufon-marketingscript.js"></script>
     <script type="text/javascript" src="includes/pagestorm/js/jquery-1.4.2.min.js"></script>
     <script type="text/javascript" src="includes/pagestorm/js/script.js"></script>
-    <script type="text/javascript" src="includes/pagestorm/js/coin-slider.min.js"></script>
+    // <script type="text/javascript" src="includes/pagestorm/js/coin-slider.min.js"></script>
 
     <?php 
 
@@ -33,7 +33,10 @@
 
         $results = json_decode($json);
 
+
+
     ?>
+
 </head>
 
 <body>
@@ -95,7 +98,7 @@
 
         <div class="slider">
 
-          <div id="coin-slider"> 
+       <!--    <div id="coin-slider"> 
 
             <a href="#">
               <img src="images/group2.jpg" width="960" height="360" alt="" />
@@ -114,7 +117,7 @@
               "You must be the change you wish to see in the world." ~ Mahatma Gandhi</span>
             </a>
 
-          </div> <!-- Coin Slider End -->
+          </div> <!-- Coin Slider End --> -->
 
           <div class="clr"></div>
 
@@ -139,7 +142,12 @@
             <div class="post_content">
               
               <!-- Place Content Here -->
-              <?php echo $results->error; ?>
+
+
+              <?php echo var_dump($results->error); ?>
+
+
+              <!-- end place content -->
 
 
             </div>
