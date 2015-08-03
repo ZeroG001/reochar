@@ -12,6 +12,28 @@
     <script type="text/javascript" src="includes/pagestorm/js/jquery-1.4.2.min.js"></script>
     <script type="text/javascript" src="includes/pagestorm/js/script.js"></script>
     <script type="text/javascript" src="includes/pagestorm/js/coin-slider.min.js"></script>
+
+    <?php 
+
+      $access_token = 'CAACEdEose0cBAGTYjA1JA1fxOtiqDZB97BhnTeIXO7enZAWZCca8feNlcCcURVJZBw9zFlvuTjYDqWoIkXqsPnFFWSOwZBsqF8uTLyItiXMSVAD5ERbrvuZBbrZCCoQ6xiIaV2LbK8xVHBXg3ZCFyQVhpRx4rbZBafhtvNSA4LqPLMYTuwUjvHZBqrgq2zcGEMGmZBczuYzlxMVc14quHZCWFOqS';
+      $fields = "id,name,description,link,cover_photo,count";
+      $fb_page_id = "1456387134662284";
+
+      // $json_link = "http://graph.facebook.com/v2.4/${fb_page_id}/albums?fields=${fields}&access_token=${access_token}";
+      // $json = file_get_contents($json_link);
+      // $obj = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
+
+      // $album_count = count($obj['data']);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://graph.facebook.com/v2.4/app?access_key=866515813415087|LqFm_mD1uClKzfuNwJF2AJG8ndI");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $json = curl_exec($ch);
+        curl_close($ch);
+
+        $results = json_decode($json);
+
+    ?>
 </head>
 
 <body>
@@ -31,6 +53,14 @@
        js.src = "//connect.facebook.net/en_US/sdk.js";
        fjs.parentNode.insertBefore(js, fjs);
      }(document, 'script', 'facebook-jssdk'));
+
+
+    // Only works after `FB.init` is called
+    function myFacebookLogin() {
+      FB.login(function(){}, {scope: 'publish_actions'});
+    }
+
+
   </script>
 
 
@@ -109,6 +139,8 @@
             <div class="post_content">
               
               <!-- Place Content Here -->
+              <?php echo $results->error; ?>
+
 
             </div>
 
