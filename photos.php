@@ -13,10 +13,15 @@
     <script type="text/javascript" src="includes/pagestorm/js/script.js"></script>
     // <script type="text/javascript" src="includes/pagestorm/js/coin-slider.min.js"></script>
 
-    <?php 
+    <?php
+      function getAccessToken() {
+       $aCode = file_get_contents('https://graph.facebook.com/oauth/access_token?client_id=866515813415087&client_secret=5c19dd551cc00c0003fa196371dde23f&grant_type=client_credentials');
+        return $aCode;
+      } 
 
-      $access_token = 'CAACEdEose0cBAGTYjA1JA1fxOtiqDZB97BhnTeIXO7enZAWZCca8feNlcCcURVJZBw9zFlvuTjYDqWoIkXqsPnFFWSOwZBsqF8uTLyItiXMSVAD5ERbrvuZBbrZCCoQ6xiIaV2LbK8xVHBXg3ZCFyQVhpRx4rbZBafhtvNSA4LqPLMYTuwUjvHZBqrgq2zcGEMGmZBczuYzlxMVc14quHZCWFOqS';
-      $fields = "id,name,description,link,cover_photo,count";
+      
+      $access_token = getAccessToken();
+      $fields = "id,name,description,link,count" # ,source - for the actual photo source;
       $fb_page_id = "1456387134662284";
 
       // $json_link = "http://graph.facebook.com/v2.4/${fb_page_id}/albums?fields=${fields}&access_token=${access_token}";
@@ -26,13 +31,12 @@
       // $album_count = count($obj['data']);
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://graph.facebook.com/v2.4/app?access_key=866515813415087|LqFm_mD1uClKzfuNwJF2AJG8ndI");
+        curl_setopt($ch, CURLOPT_URL, "https://graph.facebook.com/v2.4/${fb_page_id}/albums/?fields=${fie}&${access_token}");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $json = curl_exec($ch);
         curl_close($ch);
 
-        $results = json_decode($json);
-
+        $results = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
 
 
     ?>
@@ -41,27 +45,27 @@
 
 <body>
   <script>
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId      : '866515813415087',
-        xfbml      : true,
-        version    : 'v2.4'
-      });
-    };
+    // window.fbAsyncInit = function() {
+    //   FB.init({
+    //     appId      : '866515813415087',
+    //     xfbml      : true,
+    //     version    : 'v2.4'
+    //   });
+    // };
 
-    (function(d, s, id){
-       var js, fjs = d.getElementsByTagName(s)[0];
-       if (d.getElementById(id)) {return;}
-       js = d.createElement(s); js.id = id;
-       js.src = "//connect.facebook.net/en_US/sdk.js";
-       fjs.parentNode.insertBefore(js, fjs);
-     }(document, 'script', 'facebook-jssdk'));
+    // (function(d, s, id){
+    //    var js, fjs = d.getElementsByTagName(s)[0];
+    //    if (d.getElementById(id)) {return;}
+    //    js = d.createElement(s); js.id = id;
+    //    js.src = "//connect.facebook.net/en_US/sdk.js";
+    //    fjs.parentNode.insertBefore(js, fjs);
+    //  }(document, 'script', 'facebook-jssdk'));
 
 
-    // Only works after `FB.init` is called
-    function myFacebookLogin() {
-      FB.login(function(){}, {scope: 'publish_actions'});
-    }
+    // // Only works after `FB.init` is called
+    // function myFacebookLogin() {
+    //   FB.login(function(){}, {scope: 'publish_actions'});
+    // }
 
 
   </script>
@@ -71,11 +75,11 @@
   <div class="main">
 
     <!-- Header plus navigation -->
-    <div class="charity-top-frame">
+    <!-- <div class="charity-top-frame">
       <script type="text/javascript">
       (function(){ $('.charity-top-frame').load('charity_site_top_frame.htm'); })();
       </script>
-    </div>
+    </div> -->
     <!-- Navigation End -->
 
     <div class="header">
@@ -142,9 +146,16 @@
             <div class="post_content">
               
               <!-- Place Content Here -->
+              <?php 
+                echo $results['data']['0']['name'] . "Is the results";
 
+              ?>
+              <br />
+              <br />
 
-              <?php echo var_dump($results->error); ?>
+              <?php echo "<pre>". var_dump($results) ."</pre>"?>
+              <img src="https://scontent.xx.fbcdn.net/hphotos-xtf1/v/t1.0-9/p180x540/11800293_1466974053603592_5270214876830849984_n.jpg?oh=b410a8945662e2fc95deb3aaafb7cdd5&oe=56509103" alt="didn't load">
+
 
 
               <!-- end place content -->
