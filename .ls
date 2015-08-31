@@ -3,7 +3,7 @@
 
   <head>
     <title>Events</title>
-
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="includes/css/bootstrap/css/bootstrap.min.css">
     <link href="includes/pagestorm/css/style.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="includes/pagestorm/css/coin-slider.css" />
@@ -11,18 +11,9 @@
     <script type="text/javascript" src="includes/pagestorm/js/cufon-marketingscript.js"></script>
     <script type="text/javascript" src="includes/pagestorm/js/jquery-1.4.2.min.js"></script>
     <script type="text/javascript" src="includes/pagestorm/js/script.js"></script>
-    <script type="text/javascript" src="includes/pagestorm/js/coin-slider.min.js"></script>
+    // <script type="text/javascript" src="includes/pagestorm/js/coin-slider.min.js"></script>
 
     <?php
-
-      if($_SERVER['REQUEST_METHOD'] == "GET" && isset($_GET['album_num'])) {
-
-        $album_number = $_GET['album_num'];
-      
-      }
-
-      echo "https://graph.facebook.com/v2.4/". $album_number ."/photos/?fields=id,name,images,description&${access_token}";
-
       function getAccessToken() {
        $aCode = file_get_contents('https://graph.facebook.com/oauth/access_token?client_id=866515813415087&client_secret=5c19dd551cc00c0003fa196371dde23f&grant_type=client_credentials');
         return $aCode;
@@ -40,11 +31,8 @@
       // $album_count = count($obj['data']);
 
         $ch = curl_init();
-        
-        curl_setopt($ch, CURLOPT_URL, "https://graph.facebook.com/v2.4/". $album_number ."/photos/?fields=id,name,images,description&${access_token}");
+        curl_setopt($ch, CURLOPT_URL, "https://graph.facebook.com/v2.4/${fb_page_id}/albums/?fields=${fie}&${access_token}");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_FAILONERROR, true);
-        curl_setopt($ch, CURLOPT_HEADER , false);
         $json = curl_exec($ch);
         curl_close($ch);
 
@@ -54,6 +42,32 @@
 </head>
 
 <body>
+  <script>
+    // window.fbAsyncInit = function() {
+    //   FB.init({
+    //     appId      : '866515813415087',
+    //     xfbml      : true,
+    //     version    : 'v2.4'
+    //   });
+    // };
+
+    // (function(d, s, id){
+    //    var js, fjs = d.getElementsByTagName(s)[0];
+    //    if (d.getElementById(id)) {return;}
+    //    js = d.createElement(s); js.id = id;
+    //    js.src = "//connect.facebook.net/en_US/sdk.js";
+    //    fjs.parentNode.insertBefore(js, fjs);
+    //  }(document, 'script', 'facebook-jssdk'));
+
+
+    // // Only works after `FB.init` is called
+    // function myFacebookLogin() {
+    //   FB.login(function(){}, {scope: 'publish_actions'});
+    // }
+
+
+  </script>
+
 
 
   <div class="main">
@@ -82,7 +96,7 @@
         </div>
 
         <!-- Clearfix-->
-        <d"https://graph.facebook.com/v2.4/${fb_album_id}/photos?fields=${fields}&access_token=${access_token}"iv class="clr"></div>
+        <div class="clr"></div>
 
         <div class="slider">
 
@@ -127,42 +141,20 @@
 
             <div class="clr"></div>
 
-            <!-- Remove this afterwards -->
-            <style>
-                .post_content img {
-                  margin-bottom: 5px;
-                }
-            </style>
-            <!-- Remove this afterwards -->
-
             <div class="post_content">
-
-              <?php 
-
-                foreach ($results['data'] as $photo) {
-
-                  $img_src = $photo['images'][0]['source'];
-
-                   echo "<img src='${img_src}' width=200 height=200 />";
-                }
-
-
-              ?>
-
-
-              <img src="http://www.placehold.it/200x200" />
-              <img src="http://www.placehold.it/200x200" />
-              <img src="http://www.placehold.it/200x200" />
-              <img src="http://www.placehold.it/200x200" />
-              <img src="http://www.placehold.it/200x200" />
-              <img src="http://www.placehold.it/200x200" />
-              <img src="http://www.placehold.it/200x200" />
-              <img src="http://www.placehold.it/200x200" />
-              <img src="http://www.placehold.it/200x200" />
-
               
               <!-- Place Content Here -->
-              
+              <?php 
+                echo $results['data']['0']['name'] . "Is the results";
+
+              ?>
+              <br />
+              <br />
+
+              <?php echo "<pre>". var_dump($results) ."</pre>"?>
+              <img src="https://scontent.xx.fbcdn.net/hphotos-xtf1/v/t1.0-9/p180x540/11800293_1466974053603592_5270214876830849984_n.jpg?oh=b410a8945662e2fc95deb3aaafb7cdd5&oe=56509103" alt="didn't load">
+
+
 
               <!-- end place content -->
 
