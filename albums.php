@@ -2,11 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
   <head>
+
     <title>Events</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="includes/css/bootstrap/css/bootstrap.min.css">
     <link href="includes/pagestorm/css/style.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="includes/pagestorm/css/coin-slider.css" />
+    <link rel="stylesheet" type="text/css" href="includes/css/main.css"
     <script type="text/javascript" src="includes/pagestorm/js/cufon-yui.js"></script>
     <script type="text/javascript" src="includes/pagestorm/js/cufon-marketingscript.js"></script>
     <script type="text/javascript" src="includes/pagestorm/js/jquery-1.4.2.min.js"></script>
@@ -14,6 +16,7 @@
     <script type="text/javascript" src="includes/pagestorm/js/coin-slider.min.js"></script>
 
     <?php
+
       function getAccessToken() {
        $aCode = file_get_contents('https://graph.facebook.com/oauth/access_token?client_id=866515813415087&client_secret=5c19dd551cc00c0003fa196371dde23f&grant_type=client_credentials');
         return $aCode;
@@ -21,23 +24,17 @@
 
       
       $access_token = getAccessToken();
-      $fields = "id,name,description,link,count"; # ,source - for the actual photo source;
+      $fields = "id,name,cover_photo{source}"; # ,source - for the actual photo source;
       $fb_page_id = "1456387134662284";
 
-      // $json_link = "http://graph.facebook.com/v2.4/${fb_page_id}/albums?fields=${fields}&access_token=${access_token}";
-      // $json = file_get_contents($json_link);
-      // $obj = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
+      $ch = curl_init();
+      curl_setopt($ch, CURLOPT_URL, "https://graph.facebook.com/v2.4/1456387134662284/albums?fields=${fields}&${access_token}");
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      $json = curl_exec($ch);
+      curl_close($ch);
 
-      // $album_count = count($obj['data']);
+      $results = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
 
-        $ch = curl_init();
-        # curl_setopt($ch, CURLOPT_URL, "https://graph.facebook.com/v2.4/${fb_page_id}/albums/?fields=${fie}&${access_token}");
-        curl_setopt($ch, CURLOPT_URL, "https://graph.facebook.com/v2.4/1456387134662284/albums?fields=id,link&${access_token}");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $json = curl_exec($ch);
-        curl_close($ch);
-
-        $results = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
     ?>
 
 </head>
@@ -45,28 +42,6 @@
 <body>
 
   <script>
-    // window.fbAsyncInit = function() {
-    //   FB.init({
-    //     appId      : '866515813415087',
-    //     xfbml      : true,
-    //     version    : 'v2.4'
-    //   });
-    // };
-
-    // (function(d, s, id){
-    //    var js, fjs = d.getElementsByTagName(s)[0];
-    //    if (d.getElementById(id)) {return;}
-    //    js = d.createElement(s); js.id = id;
-    //    js.src = "//connect.facebook.net/en_US/sdk.js";
-    //    fjs.parentNode.insertBefore(js, fjs);
-    //  }(document, 'script', 'facebook-jssdk'));
-
-
-    // // Only works after `FB.init` is called
-    // function myFacebookLogin() {
-    //   FB.login(function(){}, {scope: 'publish_actions'});
-    // }
-
 
   </script>
 
@@ -147,22 +122,37 @@
               
               <!-- Place Content Here -->
 
-
+              <div class="container-fluid">
               <?php 
 
-              # echo a link to the album with the album name as the header
-              foreach($results['data'] as $album ) {
 
-                echo $album['id'];
-                echo "<a href='photos.php?album_num=" . $album['id'] . "'> Album Name </a>";
-              }
 
-              # can you get an album by name?
+                foreach($results['data'] as $album ) {
+
+                    echo "
+                        <div class='album-wrapper'>
+
+                          <a href='photos.php?album_num=" . $album['id'] . "'> 
+
+                            <div class='album-text'> 
+                              <h2>" . $album['name'] . "</h2>
+                              <h3> 10 Photos </h3>
+                            </div>
+
+                            <img src='" .$album['cover_photo']['source']. "' class='album-cover-photo responsive'/>
+                         
+                          </a>
+
+                        </div>";
+
+                  }
+
+                  
               ?>
 
 
               <!-- end place content -->
-
+              </div>
 
             </div>
 
@@ -209,16 +199,18 @@
         <p class="rf">Design by Dream <a href="http://www.dreamtemplate.com/">Web Templates</a></p>
         <div style="clear:both;"></div>
       </div>
+
     </div>
 
-<!-- Footer with Navigation -->
-<div id="footer">
-  <script type="text/javascript">
-  ( function(){ $('#footer').load("charity_site_bottom_frame.htm"); })();
-  </script>
-</div>
+    <!-- Footer with Navigation -->
+    <div id="footer">
+      <script type="text/javascript">
+      ( function(){ $('#footer').load("charity_site_bottom_frame.htm"); })();
+      </script>
+    </div>
 <!-- Footer End --> 
 
-</div> <!-- Main -->
+  </div> <!-- Main -->
+
 </body>
 </html>

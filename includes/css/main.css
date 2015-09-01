@@ -1,0 +1,153 @@
+/* Puspose of this file is to extend or override the current styles of the events page */
+
+
+
+/* 
+	--- Photos and Albums ---
+*/
+
+.album-wrapper {
+	position: relative;
+	margin-bottom: 20px;
+	box-shadow: 1px 1px 3px gray;
+}
+
+.album-wrapper:hover {
+	text-decoration: none;
+	color: black;
+}
+
+.album-text {
+	padding: 10px;
+	position: absolute;
+	width: 100%;
+	height: auto;
+	bottom:0;
+	left:50;
+	background-color: rgba(225,225,225,0.4);
+}
+
+.album-text h2, .album-text h3 {
+	display: block;
+	margin: 0px;
+}
+
+
+
+.album-cover-photo.responsive {
+	width: 100%;
+	height: auto;
+}
+
+/* photo album animations */
+
+
+
+
+/* 
+	--- Events.asp ---
+*/
+
+.recent-events {
+	margin-top: 50px;
+	color: black;
+}
+
+.event-wrapper {
+	border-bottom: 1px solid #aeaeae;
+	padding: 10px 0px;
+}
+
+.event-location-wrapper {
+	padding: 15px 0px;
+}
+
+.event-location-wrapper span {
+	display: block;
+	padding: 5px 0px;
+}
+
+
+.header {
+	font-size: 2em;
+	color: #040004  ;
+}
+
+.button-flat {
+
+	display: inline-block;
+	padding: 15px;
+	text-decoration: none;
+	font-size: 1.1rem;
+	background-color: #5f5650;
+    color: white;  
+}
+
+.button-flat:hover {
+	background-color: #7f7670
+}
+
+.donation-button:hover {
+	background-color: #0B486B;
+	color: #FEFEFE;
+}
+
+
+/* bootstrap breakpoints */
+
+/* Media Queries and Responsive Elements */
+
+@media screen and (max-width: 768px) {
+	.recent-events {
+		margin-top: 50px;
+	}
+
+	.mainbar {
+		width: 100%;
+	}
+
+	.sidebar-img, .sidebar, .event-sidebar-image {
+		display: none;
+	}
+
+	.event-wrapper {
+		box-sizing: border-box;
+		padding: 20px;
+	}
+
+	.event-wrapper .event-image {
+		width: 100%;
+		height: auto;
+		max-width: 500px;
+		border: 2px solid red;
+		display: block;
+	}
+
+	.event-wrapper h2 {
+		font-size: 1em;
+	}
+
+	.content_resize {
+		max-width: 960px;
+		width: 100%;
+	}
+
+	.content .mainbar .post_content, .content .mainbar {
+		width: 100%;
+	}
+
+	.content .mainbar .article {
+		padding: 0px 0px;
+	}
+
+}
+
+
+/* Small devices (tablets, 768px and up) */
+
+
+/* Medium devices (desktops, 992px and up) */
+
+
+/* Large devices (large desktops, 1200px and up) */
+

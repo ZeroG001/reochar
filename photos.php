@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="includes/css/bootstrap/css/bootstrap.min.css">
     <link href="includes/pagestorm/css/style.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="includes/pagestorm/css/coin-slider.css" />
+    <link rel="stylesheet" type="text/css" href="includes/css/main.css"
     <script type="text/javascript" src="includes/pagestorm/js/cufon-yui.js"></script>
     <script type="text/javascript" src="includes/pagestorm/js/cufon-marketingscript.js"></script>
     <script type="text/javascript" src="includes/pagestorm/js/jquery-1.4.2.min.js"></script>
@@ -21,7 +22,6 @@
       
       }
 
-      echo "https://graph.facebook.com/v2.4/". $album_number ."/photos/?fields=id,name,images,description&${access_token}";
 
       function getAccessToken() {
        $aCode = file_get_contents('https://graph.facebook.com/oauth/access_token?client_id=866515813415087&client_secret=5c19dd551cc00c0003fa196371dde23f&grant_type=client_credentials');
@@ -82,7 +82,7 @@
         </div>
 
         <!-- Clearfix-->
-        <d"https://graph.facebook.com/v2.4/${fb_album_id}/photos?fields=${fields}&access_token=${access_token}"iv class="clr"></div>
+        <div class="clr"></div>
 
         <div class="slider">
 
@@ -129,36 +129,39 @@
 
             <!-- Remove this afterwards -->
             <style>
+
                 .post_content img {
                   margin-bottom: 5px;
                 }
+
             </style>
             <!-- Remove this afterwards -->
 
             <div class="post_content">
 
+              <div class="container-fluid">
+
               <?php 
 
                 foreach ($results['data'] as $photo) {
 
+                  echo "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 '>";
+
+
                   $img_src = $photo['images'][0]['source'];
 
-                   echo "<img src='${img_src}' width=200 height=200 />";
+                  echo "<img src='${img_src}' class='img-responsive' />";
+                  
+                  echo "</div>";
                 }
-
 
               ?>
 
 
-              <img src="http://www.placehold.it/200x200" />
-              <img src="http://www.placehold.it/200x200" />
-              <img src="http://www.placehold.it/200x200" />
-              <img src="http://www.placehold.it/200x200" />
-              <img src="http://www.placehold.it/200x200" />
-              <img src="http://www.placehold.it/200x200" />
-              <img src="http://www.placehold.it/200x200" />
-              <img src="http://www.placehold.it/200x200" />
-              <img src="http://www.placehold.it/200x200" />
+            </div>
+
+
+  
 
               
               <!-- Place Content Here -->
@@ -180,9 +183,11 @@
 
             <!-- Load Sidebar from one spot -->
             <script type="text/javascript">
+
             (function(){
               $('.gadget').load("layout_sidebar_right.asp");
             })();
+
             </script>
             <!-- Script End -->
 
