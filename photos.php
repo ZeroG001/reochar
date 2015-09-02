@@ -53,6 +53,13 @@
         $results = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
     ?>
 
+    <script> 
+       var results = <?php echo $json; ?>;
+      
+
+
+    </script>
+
 </head>
 
 <body>
@@ -165,11 +172,7 @@
 
                   </ul>
 
-                  <div class="rslides-nav"> Test </div>
                 </div>
-
-                
-
 
             </div>
 
@@ -247,9 +250,5 @@
 </html>
 
 <!-- Run once the document is ready -->
-<script> 
-  var json_data = <?php echo json_encode($results) ?>
-  console.log(json_data);
 
-</script>
 <script type='text/javascript' src='includes/js/responsiveslidesconfig.js'></script> 

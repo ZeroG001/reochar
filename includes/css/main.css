@@ -48,14 +48,29 @@
 
 .rslides-container {
 	position: relative;
+	display: block;
 	width: 100%;
 	height: auto;
 	background-color: black;
+	min-height: 300px;
 }
 
 /* do this only for the photo page */
 .content .mainbar .post_content.fullwidth {
 	width:100%;
+}
+
+.rslides_tabs li {
+	display: inline-block;
+	list-style: none;
+
+	margin: 0px 10px 0px 0px;
+}
+
+.rslider-nav-images {
+	width: 100px;
+	height: auto;
+	display: inline-block;
 }
 
 /* 
