@@ -42,7 +42,21 @@
 /* photo album animations */
 
 
+/*
+	Slideshow styles
+*/
 
+.rslides-container {
+	position: relative;
+	width: 100%;
+	height: auto;
+	background-color: black;
+}
+
+/* do this only for the photo page */
+.content .mainbar .post_content.fullwidth {
+	width:100%;
+}
 
 /* 
 	--- Events.asp ---

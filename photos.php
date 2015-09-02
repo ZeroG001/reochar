@@ -7,11 +7,13 @@
     <link rel="stylesheet" type="text/css" href="includes/css/bootstrap/css/bootstrap.min.css">
     <link href="includes/pagestorm/css/style.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="includes/pagestorm/css/coin-slider.css" />
-    <link rel="stylesheet" type="text/css" href="includes/css/main.css"
+    <link rel="stylesheet" type="text/css" href="includes/css/responsiveslides.css" />
+    <link rel="stylesheet" type="text/css" href="includes/css/main.css" />
     <script type="text/javascript" src="includes/pagestorm/js/cufon-yui.js"></script>
     <script type="text/javascript" src="includes/pagestorm/js/cufon-marketingscript.js"></script>
     <script type="text/javascript" src="includes/pagestorm/js/jquery-1.4.2.min.js"></script>
     <script type="text/javascript" src="includes/pagestorm/js/script.js"></script>
+    <script type="text/javascript" src="includes/js/responsiveslides.min.js"> </script>
     <script type="text/javascript" src="includes/pagestorm/js/coin-slider.min.js"></script>
 
     <?php
@@ -31,7 +33,7 @@
       
       $access_token = getAccessToken();
       $fields = "id,name,description,link,count"; # ,source - for the actual photo source;
-      $fb_page_id = "1456387134662284";
+      $fb_page_id = "1456387134662284"; # 53249966765 1456387134662284
 
       // $json_link = "http://graph.facebook.com/v2.4/${fb_page_id}/albums?fields=${fields}&access_token=${access_token}";
       // $json = file_get_contents($json_link);
@@ -137,25 +139,36 @@
             </style>
             <!-- Remove this afterwards -->
 
-            <div class="post_content">
+            <div class="post_content fullwidth">
 
               <div class="container-fluid">
+                
+                <div class="rslides-container">
 
-              <?php 
+                  <ul class="rslides">
 
-                foreach ($results['data'] as $photo) {
+                    <?php 
 
-                  echo "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 '>";
+                      foreach ($results['data'] as $photo) {
 
+                        # echo "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 '>";
+                
 
-                  $img_src = $photo['images'][0]['source'];
+                        $img_src = $photo['images'][0]['source'];
 
-                  echo "<img src='${img_src}' class='img-responsive' />";
-                  
-                  echo "</div>";
-                }
+                        echo "<li><img src='${img_src}' class='img-responsive myimg' /></li>";
+                        
+                        #echo "</div>";
+                      }
 
-              ?>
+                    ?>
+
+                  </ul>
+
+                  <div class="rslides-nav"> Test </div>
+                </div>
+
+                
 
 
             </div>
@@ -227,6 +240,16 @@
 </div>
 <!-- Footer End --> 
 
+
+
 </div> <!-- Main -->
 </body>
 </html>
+
+<!-- Run once the document is ready -->
+<script> 
+  var json_data = <?php echo json_encode($results) ?>
+  console.log(json_data);
+
+</script>
+<script type='text/javascript' src='includes/js/responsiveslidesconfig.js'></script> 
