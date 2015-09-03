@@ -152,27 +152,38 @@
                 
                 <div class="rslides-container">
 
-                  <ul class="rslides">
+                  <div class="rslides-image-well">
 
-                    <?php 
+                    <ul class="rslides">
 
-                      foreach ($results['data'] as $photo) {
+                      <?php 
 
-                        # echo "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 '>";
-                
+                        foreach ($results['data'] as $photo) {
 
-                        $img_src = $photo['images'][0]['source'];
+                          # echo "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 '>";
+                  
 
-                        echo "<li><img src='${img_src}' class='img-responsive myimg' /></li>";
-                        
-                        #echo "</div>";
-                      }
+                          $img_src = $photo['images'][0]['source'];
 
-                    ?>
+                          echo "<li><img src='${img_src}' class='img-responsive myimg' /></li>";
+                          
+                          #echo "</div>";
+                        }
 
-                  </ul>
+                      ?>
+
+                    </ul>
+
+                  </div>
+
+                  <div class="rslides-image-nav"> </div>
+                  <!-- <a href="#" class="rslides_nav rslides1_nav prev"> -->
+
+                  <!-- <a href="#" class="rslides_nav rslides1_nav next"> -->
 
                 </div>
+
+                <div class="rungo"></div>
 
             </div>
 
