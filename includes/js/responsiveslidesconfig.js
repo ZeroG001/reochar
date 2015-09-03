@@ -15,8 +15,8 @@
       pauseControls: true,    // Boolean: Pause when hovering controls, true or false
       prevText: "<img src='images/circle-left.png' />",   // String: Text for the "previous" button
       nextText: "<img src='images/circle-right.png' />",       // String: Text for the "next" button
-      maxwidth: "",           // Integer: Max-width of the slideshow, in pixels
-      navContainer: "",       // Selector: Where controls should be appended to, default is after the 'ul'
+      maxwidth: "724",           // Integer: Max-width of the slideshow, in pixels
+      navContainer: ".rslides-image-nav",       // Selector: Where controls should be appended to, default is after the 'ul'
       manualControls: "",     // Selector: Declare custom pager navigation
       namespace: "rslides",   // String: Change the default namespace used
       before: function(){},   // Function: Before callback
