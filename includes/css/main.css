@@ -84,12 +84,10 @@
 
 
 
-
-
 	.rslides_tabs {
-		min-width: 2000px;
+		min-width: 7000px;
 		position: absolute;
-		left: 140px;
+		left: 270px;
 		z-index: 10;
 	}
 
@@ -104,6 +102,7 @@
 		width: 100px;
 		height: auto;
 		display: inline-block;
+		max-height: 80px;
 	}
 
 	.rslides-image-well {

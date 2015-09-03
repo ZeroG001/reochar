@@ -31,12 +31,57 @@
 // Append image to "a" tag
 $(document).ready(function(){
 
+  var p_index;
 
+  function getImages(){
+    // Get number of images
+    console.log(results.data.length);
+
+  }
 
   $('.rslides_tabs li a').each(function(index){
            $(this).html("<img src='"+results.data[index].images[0].source+"' class='rslider-nav-images' />");
 
-          console.log(results.data[index].images[0].source);
+            console.log(results.data[index].images[0].source);
 
   });
+
+
+  $('.rslides_nav.next').click(function(){
+
+    $('.rslides_tabs').animate({
+
+      left: "-=105"
+
+    });
+
+  });
+
+
+    $('.rslides_nav.prev').click(function(){
+
+    $('.rslides_tabs').animate({
+
+      left: "+=105"
+
+    });
+
+  });
+
+
+
+  $('.rslides_tabs li').click(function(){
+
+      t_pos = 270;
+
+      l_pos = $(this).position().left;
+
+      $('.rslides_tabs').animate({
+
+        left: t_pos - l_pos 
+
+      });
+
+    });
+
 });

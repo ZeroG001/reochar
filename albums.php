@@ -25,7 +25,7 @@
       
       $access_token = getAccessToken();
       $fields = "id,name,cover_photo{source}"; # ,source - for the actual photo source;
-      $fb_page_id = "1456387134662284"; # 53249966765 1456387134662284
+      $fb_page_id = "53249966765"; # 53249966765 1456387134662284
 
       $ch = curl_init();
       curl_setopt($ch, CURLOPT_URL, "https://graph.facebook.com/v2.4/${fb_page_id}/albums?fields=${fields}&${access_token}");

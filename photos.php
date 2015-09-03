@@ -9,12 +9,7 @@
     <link rel="stylesheet" type="text/css" href="includes/pagestorm/css/coin-slider.css" />
     <link rel="stylesheet" type="text/css" href="includes/css/responsiveslides.css" />
     <link rel="stylesheet" type="text/css" href="includes/css/main.css" />
-    <script type="text/javascript" src="includes/pagestorm/js/cufon-yui.js"></script>
-    <script type="text/javascript" src="includes/pagestorm/js/cufon-marketingscript.js"></script>
-    <script type="text/javascript" src="includes/pagestorm/js/jquery-1.4.2.min.js"></script>
-    <script type="text/javascript" src="includes/pagestorm/js/script.js"></script>
-    <script type="text/javascript" src="includes/js/responsiveslides.min.js"> </script>
-    <script type="text/javascript" src="includes/pagestorm/js/coin-slider.min.js"></script>
+
 
     <?php
 
@@ -33,7 +28,7 @@
       
       $access_token = getAccessToken();
       $fields = "id,name,description,link,count"; # ,source - for the actual photo source;
-      $fb_page_id = "1456387134662284"; # 53249966765 1456387134662284
+      $fb_page_id = "53249966765"; # 53249966765 1456387134662284
 
       // $json_link = "http://graph.facebook.com/v2.4/${fb_page_id}/albums?fields=${fields}&access_token=${access_token}";
       // $json = file_get_contents($json_link);
@@ -183,7 +178,6 @@
 
                 </div>
 
-                <div class="rungo"></div>
 
             </div>
 
@@ -261,5 +255,10 @@
 </html>
 
 <!-- Run once the document is ready -->
-
+<script type="text/javascript" src="includes/pagestorm/js/cufon-yui.js"></script>
+<script type="text/javascript" src="includes/pagestorm/js/cufon-marketingscript.js"></script>
+<script type="text/javascript" src="includes/pagestorm/js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="includes/pagestorm/js/script.js"></script>
+<script type="text/javascript" src="includes/js/responsiveslides.min.js"> </script>
+<script type="text/javascript" src="includes/pagestorm/js/coin-slider.min.js"></script>
 <script type='text/javascript' src='includes/js/responsiveslidesconfig.js'></script> 
