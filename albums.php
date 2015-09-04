@@ -24,8 +24,8 @@
 
       
       $access_token = getAccessToken();
-      $fields = "id,name,cover_photo{source}"; # ,source - for the actual photo source;
-      $fb_page_id = "53249966765"; # 53249966765 1456387134662284
+      $fields = "id,name,count,cover_photo{source}"; # ,source - for the actual photo source;
+      $fb_page_id = "234249230011385"; # 53249966765 1456387134662284 234249230011385
 
       $ch = curl_init();
       curl_setopt($ch, CURLOPT_URL, "https://graph.facebook.com/v2.4/${fb_page_id}/albums?fields=${fields}&${access_token}");
@@ -120,8 +120,6 @@
               <div class="container-fluid">
               <?php 
 
-
-
                 foreach($results['data'] as $album ) {
 
                     echo "
@@ -131,7 +129,7 @@
 
                             <div class='album-text'> 
                               <h2>" . $album['name'] . "</h2>
-                              <h3> 10 Photos </h3>
+                              <h3> ".$album['count']." Photos </h3>
                             </div>
 
                             <img src='" .$album['cover_photo']['source']. "' class='album-cover-photo responsive'/>

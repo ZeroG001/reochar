@@ -10,6 +10,8 @@
     <link rel="stylesheet" type="text/css" href="includes/css/responsiveslides.css" />
     <link rel="stylesheet" type="text/css" href="includes/css/main.css" />
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 
     <?php
 
@@ -28,7 +30,7 @@
       
       $access_token = getAccessToken();
       $fields = "id,name,description,link,count"; # ,source - for the actual photo source;
-      $fb_page_id = "53249966765"; # 53249966765 1456387134662284
+      $fb_page_id = "234249230011385"; # 53249966765 1456387134662284 234249230011385
 
       // $json_link = "http://graph.facebook.com/v2.4/${fb_page_id}/albums?fields=${fields}&access_token=${access_token}";
       // $json = file_get_contents($json_link);
@@ -49,10 +51,8 @@
     ?>
 
     <script> 
+      // Load Json results into javascript
        var results = <?php echo $json; ?>;
-      
-
-
     </script>
 
 </head>
@@ -160,7 +160,7 @@
 
                           $img_src = $photo['images'][0]['source'];
 
-                          echo "<li><img src='${img_src}' class='img-responsive myimg' /></li>";
+                          echo "<li><img src='${img_src}' class='img-responsive ' /></li>";
                           
                           #echo "</div>";
                         }

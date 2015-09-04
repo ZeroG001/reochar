@@ -15,7 +15,7 @@
       pauseControls: true,    // Boolean: Pause when hovering controls, true or false
       prevText: "<img src='images/circle-left.png' />",   // String: Text for the "previous" button
       nextText: "<img src='images/circle-right.png' />",       // String: Text for the "next" button
-      maxwidth: "724",           // Integer: Max-width of the slideshow, in pixels
+      maxwidth: "",           // Integer: Max-width of the slideshow, in pixels
       navContainer: ".rslides-image-nav",       // Selector: Where controls should be appended to, default is after the 'ul'
       manualControls: "",     // Selector: Declare custom pager navigation
       namespace: "rslides",   // String: Change the default namespace used
@@ -35,53 +35,51 @@ $(document).ready(function(){
 
   function getImages(){
     // Get number of images
-    console.log(results.data.length);
+    console.log(results.data);
 
   }
 
+  getImages();
+
+  // Photo navation becomes images
   $('.rslides_tabs li a').each(function(index){
-           $(this).html("<img src='"+results.data[index].images[0].source+"' class='rslider-nav-images' />");
-
-            console.log(results.data[index].images[0].source);
-
+           $(this).html("<img src='"+results.data[index].images[3].source+"' class='rslider-nav-images' />");
   });
 
+  function moveSlideshowNav() {
 
-  $('.rslides_nav.next').click(function(){
+      init_pos = 270;
 
-    $('.rslides_tabs').animate({
-
-      left: "-=105"
-
-    });
-
-  });
-
-
-    $('.rslides_nav.prev').click(function(){
-
-    $('.rslides_tabs').animate({
-
-      left: "+=105"
-
-    });
-
-  });
-
-
-
-  $('.rslides_tabs li').click(function(){
-
-      t_pos = 270;
-
-      l_pos = $(this).position().left;
+      l_pos = $('.rslides_here').position().left;
 
       $('.rslides_tabs').animate({
 
-        left: t_pos - l_pos 
+        left: init_pos - l_pos
 
       });
 
-    });
+  }
+
+  // When the next button is clicked
+  $('.rslides_nav.next').click(function(){
+
+    moveSlideshowNav();
+
+   });
+
+  // When the prev button is clicked
+  $('.rslides_nav.prev').click(function(){
+
+    moveSlideshowNav();
+
+  });
+
+
+  // When a slideshow item is clicked.
+  $('.rslides_tabs li').click(function(){
+
+    moveSlideshowNav();
+
+  });
 
 });
