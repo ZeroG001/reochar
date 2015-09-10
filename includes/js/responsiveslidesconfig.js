@@ -14,9 +14,9 @@
       pause: true,           // Boolean: Pause on hover, true or false
       pauseControls: true,    // Boolean: Pause when hovering controls, true or false
       prevText: "<img src='images/circle-left.png' />",   // String: Text for the "previous" button
-      nextText: "<img src='images/circle-right.png' />",       // String: Text for the "next" button
+      nextText: "<img src='images/circle-right.png' />",  // String: Text for the "next" button
       maxwidth: "",           // Integer: Max-width of the slideshow, in pixels
-      navContainer: ".rslides-image-nav",       // Selector: Where controls should be appended to, default is after the 'ul'
+      navContainer: "",       // Selector: Where controls should be appended to, default is after the 'ul'
       manualControls: "",     // Selector: Declare custom pager navigation
       namespace: "rslides",   // String: Change the default namespace used
       before: function(){},   // Function: Before callback
@@ -33,46 +33,48 @@ $(document).ready(function(){
 
   var p_index;
 
-  function getImages(){
-    // Get number of images
-    console.log(results.data);
+(function(){
+  // Get the number of images
+  console.log(results.data);
+})();
+ 
 
-  }
+// Replce each nav item number with image
 
-  getImages();
 
   // Photo navation becomes images
-  $('.rslides_tabs li a').each(function(index){
-           $(this).html("<img src='"+results.data[index].images[3].source+"' class='rslider-nav-images' />");
-  });
+  // $('.rslides_tabs li a').each(function(index){
+  //          $(this).html("<img src='"+results.data[index].images[3].source+"' class='rslider-nav-images' />");
+  // });
 
-  function moveSlideshowNav() {
+  // function moveSlideshowNav() {
 
-      init_pos = 270;
+  //     // Where the center should be
+  //     init_pos = 270;
 
-      l_pos = $('.rslides_here').position().left;
+  //     l_pos = $('.rslides_here').position().left;
 
-      $('.rslides_tabs').animate({
+  //     $('.rslides_tabs').animate({
 
-        left: init_pos - l_pos
+  //       left: init_pos - l_pos
 
-      });
+  //     });
 
-  }
+  // }
 
-  // When the next button is clicked
-  $('.rslides_nav.next').click(function(){
+  // // When the next button is clicked
+  // $('.rslides_nav.next').click(function(){
 
-    moveSlideshowNav();
+  //   moveSlideshowNav();
 
-   });
+  //  });
 
-  // When the prev button is clicked
-  $('.rslides_nav.prev').click(function(){
+  // // When the prev button is clicked
+  // $('.rslides_nav.prev').click(function(){
 
-    moveSlideshowNav();
+  //   moveSlideshowNav();
 
-  });
+  // });
 
 
   // When a slideshow item is clicked.

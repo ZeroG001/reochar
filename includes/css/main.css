@@ -63,7 +63,7 @@
 		background-color: black;
 	}
 
-	.rslides_nav.next {
+/*	.rslides_nav.next {
 		position: absolute;
 		top: 30%;
 		left: 90%;
@@ -76,7 +76,7 @@
 		left: 5%;
 		z-index: 20;
 	}
-
+*/
 	/* do this only for the photo page */
 	.content .mainbar .post_content.fullwidth {
 		width:100%;
@@ -131,18 +131,17 @@
 
     margin: 0px auto;
     
-
 	}
 
 
-	.rslides-image-nav:before, .rslides-image-nav:after {
+/*	.rslides-image-nav:before, .rslides-image-nav:after {
 		content: " ";
 		background-color: black;
 		height: 100%;
 		display: inline-block;
 		position: absolute;
 		width: 100px;
-	}
+	}*/
 
 
 	.rslides-image-nav {

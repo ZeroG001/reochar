@@ -147,7 +147,7 @@
                 
                 <div class="rslides-container">
 
-                  <div class="rslides-image-well">
+    
 
                     <ul class="rslides">
 
@@ -160,7 +160,7 @@
 
                           $img_src = $photo['images'][0]['source'];
 
-                          echo "<li><img src='${img_src}' class='img-responsive ' /></li>";
+                          echo "<li><img src='${img_src}' class='' /></li>";
                           
                           #echo "</div>";
                         }
@@ -169,7 +169,7 @@
 
                     </ul>
 
-                  </div>
+                  
 
                   <div class="rslides-image-nav"> </div>
                   <!-- <a href="#" class="rslides_nav rslides1_nav prev"> -->
