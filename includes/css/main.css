@@ -6,6 +6,10 @@
 	--- Photos and Albums ---
 	*/
 
+	.img-container {
+		overflow: hidden;
+	}
+
 	.album-wrapper {
 		position: relative;
 		margin-bottom: 20px;
@@ -53,7 +57,7 @@
 /*
 	Slideshow styles
 	*/
-
+/*
 
 	.rslides-container {
 		position: relative;
@@ -62,7 +66,7 @@
 		height: auto;
 		background-color: black;
 	}
-
+*/
 /*	.rslides_nav.next {
 		position: absolute;
 		top: 30%;
@@ -78,7 +82,7 @@
 	}
 */
 	/* do this only for the photo page */
-	.content .mainbar .post_content.fullwidth {
+/*	.content .mainbar .post_content.fullwidth {
 		width:100%;
 	}
 
@@ -132,7 +136,7 @@
     margin: 0px auto;
     
 	}
-
+*/
 
 /*	.rslides-image-nav:before, .rslides-image-nav:after {
 		content: " ";

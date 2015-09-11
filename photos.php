@@ -16,9 +16,7 @@
     <?php
 
       if($_SERVER['REQUEST_METHOD'] == "GET" && isset($_GET['album_num'])) {
-
         $album_number = $_GET['album_num'];
-      
       }
 
 
@@ -139,12 +137,38 @@
                 }
 
             </style>
+
+
+            <div class='container-fluid'>
+
+
+                <?php 
+
+                  foreach ($results['data'] as $photo) {
+
+                    
+                    $img_src = $photo['images'][0]['source'];
+
+                    echo "<div class='col-md-12 col-sm-12 col-lg-12 img-container'>";
+
+                    echo "<li><img src='${img_src}' class='img-responsive' /></li>";
+
+                    echo "</div>";
+                    
+                  }
+
+                ?>
+
+
+            </div>
             <!-- Remove this afterwards -->
 
-            <div class="post_content fullwidth">
+           <!--  <div class="post_content fullwidth"> -->
 
-              <div class="container-fluid">
+ 
                 
+
+            <!--
                 <div class="rslides-container">
 
     
@@ -155,14 +179,13 @@
 
                         foreach ($results['data'] as $photo) {
 
-                          # echo "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 '>";
+                       
                   
 
                           $img_src = $photo['images'][0]['source'];
 
                           echo "<li><img src='${img_src}' class='' /></li>";
                           
-                          #echo "</div>";
                         }
 
                       ?>
@@ -175,14 +198,11 @@
                   <!-- <a href="#" class="rslides_nav rslides1_nav prev"> -->
 
                   <!-- <a href="#" class="rslides_nav rslides1_nav next"> -->
-
+              <!--
                 </div>
 
+              -->
 
-            </div>
-
-
-  
 
               
               <!-- Place Content Here -->
@@ -191,7 +211,7 @@
               <!-- end place content -->
 
 
-            </div>
+            <!-- </div> -->
 
             <div class="clr"></div>
           </div>
