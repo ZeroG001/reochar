@@ -7,7 +7,17 @@
 	*/
 
 	.img-container {
-		overflow: hidden;
+		background-color: black;
+		margin-top: 5px;
+
+	}
+
+	.img-item {
+		display: block;
+		margin: 0px auto;
+		min-height: 200px;
+		max-height: 200px;
+
 	}
 
 	.album-wrapper {
@@ -43,9 +53,6 @@
 		height: auto;
 	}
 
-	.myimg {
-
-	}
 
 	.rslides_here {
 		/* have the item glow for the one thats selected */

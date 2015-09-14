@@ -7,8 +7,8 @@
     <link rel="stylesheet" type="text/css" href="includes/css/bootstrap/css/bootstrap.min.css">
     <link href="includes/pagestorm/css/style.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="includes/pagestorm/css/coin-slider.css" />
-    <link rel="stylesheet" type="text/css" href="includes/css/responsiveslides.css" />
     <link rel="stylesheet" type="text/css" href="includes/css/main.css" />
+    <script type="text/javascript" src="includes/pagestorm/js/jquery-1.4.2.min.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -36,22 +36,10 @@
 
       // $album_count = count($obj['data']);
 
-        $ch = curl_init();
-        
-        curl_setopt($ch, CURLOPT_URL, "https://graph.facebook.com/v2.4/". $album_number ."/photos/?fields=id,name,images,description&${access_token}");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_FAILONERROR, true);
-        curl_setopt($ch, CURLOPT_HEADER , false);
-        $json = curl_exec($ch);
-        curl_close($ch);
-
-        $results = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
-    ?>
-
-    <script> 
-      // Load Json results into javascript
-       var results = <?php echo $json; ?>;
-    </script>
+    
+      $api_call_string = "https://graph.facebook.com/v2.4/421728431263463/photos/?fields=id,name,images,description&${access_token}";
+      
+      ?>
 
 </head>
 
@@ -141,77 +129,14 @@
 
             <div class='container-fluid'>
 
-
-                <?php 
-
-                  foreach ($results['data'] as $photo) {
-
-                    
-                    $img_src = $photo['images'][0]['source'];
-
-                    echo "<div class='col-md-12 col-sm-12 col-lg-12 img-container'>";
-
-                    echo "<li><img src='${img_src}' class='img-responsive' /></li>";
-
-                    echo "</div>";
-                    
-                  }
-
-                ?>
-
-
-            </div>
-            <!-- Remove this afterwards -->
-
-           <!--  <div class="post_content fullwidth"> -->
-
- 
-                
-
-            <!--
-                <div class="rslides-container">
-
-    
-
-                    <ul class="rslides">
-
-                      <?php 
-
-                        foreach ($results['data'] as $photo) {
-
-                       
-                  
-
-                          $img_src = $photo['images'][0]['source'];
-
-                          echo "<li><img src='${img_src}' class='' /></li>";
-                          
-                        }
-
-                      ?>
-
-                    </ul>
-
-                  
-
-                  <div class="rslides-image-nav"> </div>
-                  <!-- <a href="#" class="rslides_nav rslides1_nav prev"> -->
-
-                  <!-- <a href="#" class="rslides_nav rslides1_nav next"> -->
-              <!--
+                <div class='image-container'>
+                  <!-- Images will be loaded here -->
                 </div>
 
-              -->
+                <button class="load-more"> Load More </button>
 
+            </div>
 
-              
-              <!-- Place Content Here -->
-              
-
-              <!-- end place content -->
-
-
-            <!-- </div> -->
 
             <div class="clr"></div>
           </div>
@@ -223,13 +148,7 @@
             <h2 class="star">Upcoming Events</h2>
 
             <!-- Load Sidebar from one spot -->
-            <script type="text/javascript">
-
-            (function(){
-              $('.gadget').load("layout_sidebar_right.asp");
-            })();
-
-            </script>
+  
             <!-- Script End -->
 
             <h2> Photos go here </h2>
@@ -262,9 +181,7 @@
 
 <!-- Footer with Navigation -->
 <div id="footer">
-  <script type="text/javascript">
-  ( function(){ $('#footer').load("charity_site_bottom_frame.htm"); })();
-  </script>
+
 </div>
 <!-- Footer End --> 
 
@@ -277,8 +194,48 @@
 <!-- Run once the document is ready -->
 <script type="text/javascript" src="includes/pagestorm/js/cufon-yui.js"></script>
 <script type="text/javascript" src="includes/pagestorm/js/cufon-marketingscript.js"></script>
-<script type="text/javascript" src="includes/pagestorm/js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="includes/pagestorm/js/script.js"></script>
-<script type="text/javascript" src="includes/js/responsiveslides.min.js"> </script>
-<script type="text/javascript" src="includes/pagestorm/js/coin-slider.min.js"></script>
-<script type='text/javascript' src='includes/js/responsiveslidesconfig.js'></script> 
+<script type="text/javascript" src="includes/pagestorm/js/coin-slider.min.js"></script> 
+<script> 
+  var call_string = '<?php echo $api_call_string ?>';
+
+  $('#footer').load("charity_site_bottom_frame.htm");
+  $('.gadget').load("layout_sidebar_right.html");
+
+  $.ajax({
+
+    method : "GET",
+    url : call_string,
+    success: function(response){
+      console.log(response);
+      // response.data;
+      // response.paging;
+    }
+
+  });
+
+
+// Function fb_show_images(Load Images(url, target)
+// Get Images via ajax
+// then outputs in the images in the target area
+
+function fb_show_images(utl, target) {
+  $.ajax({
+    method: "get",
+    url: url,
+    success : function(){
+
+    }
+
+  });
+}
+
+
+
+  $('.load-more').click(function(){
+    alert("you've clicked this");
+  });
+
+
+
+</script>
