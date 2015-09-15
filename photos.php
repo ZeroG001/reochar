@@ -8,7 +8,8 @@
     <link href="includes/pagestorm/css/style.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="includes/pagestorm/css/coin-slider.css" />
     <link rel="stylesheet" type="text/css" href="includes/css/main.css" />
-    <script type="text/javascript" src="includes/pagestorm/js/jquery-1.4.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="includes/css/animate.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -37,9 +38,21 @@
       // $album_count = count($obj['data']);
 
     
-      $api_call_string = "https://graph.facebook.com/v2.4/421728431263463/photos/?fields=id,name,images,description&${access_token}";
+      $api_call_string = "https://graph.facebook.com/v2.4/".$album_number."/photos/?fields=id,name,images,description&${access_token}";
       
       ?>
+
+      <style>
+        .image-container img {
+          max-width: 100%;
+          height: auto;
+
+          border: 5px solid black;
+          box-sizing: border-box;
+
+          margin-bottom: 10px;
+        }
+      </style>
 
 </head>
 
@@ -70,6 +83,8 @@
         <div class="logo">
           <h1><a href="includes/pagestorm/index.html">Photos</a></h1>
         </div>
+
+
 
         <!-- Clearfix-->
         <div class="clr"></div>
@@ -127,13 +142,14 @@
             </style>
 
 
+
             <div class='container-fluid'>
 
-                <div class='image-container'>
-                  <!-- Images will be loaded here -->
-                </div>
+              <div class='image-container'>
+                <!-- Images will be loaded here -->
+              </div>
 
-                <button class="load-more"> Load More </button>
+              <section class="wow slideInLeft">Next</section>
 
             </div>
 
@@ -183,6 +199,8 @@
 <div id="footer">
 
 </div>
+
+
 <!-- Footer End --> 
 
 
@@ -195,46 +213,99 @@
 <script type="text/javascript" src="includes/pagestorm/js/cufon-yui.js"></script>
 <script type="text/javascript" src="includes/pagestorm/js/cufon-marketingscript.js"></script>
 <script type="text/javascript" src="includes/pagestorm/js/script.js"></script>
-<script type="text/javascript" src="includes/pagestorm/js/coin-slider.min.js"></script> 
+<script type="text/javascript" src="includes/pagestorm/js/coin-slider.min.js"></script>
+<script type="text/javascript" src="includes/js/wow.min.js"> </script>
 <script> 
-  var call_string = '<?php echo $api_call_string ?>';
 
-  $('#footer').load("charity_site_bottom_frame.htm");
-  $('.gadget').load("layout_sidebar_right.html");
 
-  $.ajax({
+var ajax_response;
 
-    method : "GET",
-    url : call_string,
-    success: function(response){
-      console.log(response);
-      // response.data;
-      // response.paging;
+$('#footer').load("charity_site_bottom_frame.htm");
+$('.gadget').load("layout_sidebar_right.html");
+ var call_string = '<?php echo $api_call_string ?>';
+
+function forEach(arr, callback) {
+
+    for (i = 0; i < arr.length; i++) {
+      callback(arr[i]);
     }
 
-  });
+}
+
+
 
 
 // Function fb_show_images(Load Images(url, target)
 // Get Images via ajax
 // then outputs in the images in the target area
+// Requirements. you need an element called load-more
 
-function fb_show_images(utl, target) {
+function fb_show_images(url, target_element) {
+
+  console.log("running show images");
+
   $.ajax({
-    method: "get",
-    url: url,
-    success : function(){
 
+    method: "GET",
+    url: url,
+    success : function(response) {
+
+      var wow = new WOW(
+  {
+    boxClass:     'wow',      // animated element css class (default is wow)
+    animateClass: 'animated', // animation css class (default is animated)
+    offset:       0,          // distance to the element when triggering the animation (default is 0)
+    mobile:       true,       // trigger animations on mobile devices (default is true)
+    live:         true,       // act on asynchronously loaded content (default is true)
+    callback:     function(box) {
+
+      if (response.paging.next) {
+        fb_show_images(response.paging.next, target_element);
+      }
+      
+      // the callback is fired every time an animation is started
+      // the argument that is passed in is the DOM node being animated
+    }
+  });
+        wow.init();
+
+        $('.load-more').unbind("click");
+        $('.load-more').click(function(){
+       
+         
+        });
+
+        // Present Each Photo ontot the page
+        forEach(response.data, function(picture) {
+          $(target_element).append("<img src='"+picture.images[0].source+"' />");
+
+        });
+        // =====================================
     }
 
   });
+
 }
 
 
-
-  $('.load-more').click(function(){
-    alert("you've clicked this");
+var wow = new WOW(
+  {
+    boxClass:     'wow',      // animated element css class (default is wow)
+    animateClass: 'animated', // animation css class (default is animated)
+    offset:       0,          // distance to the element when triggering the animation (default is 0)
+    mobile:       true,       // trigger animations on mobile devices (default is true)
+    live:         true,       // act on asynchronously loaded content (default is true)
+    callback:     function(box) {
+      alert('you scrolled me');
+      // the callback is fired every time an animation is started
+      // the argument that is passed in is the DOM node being animated
+    }
   });
+
+
+// Initialze the page loading function
+fb_show_images(call_string, ".image-container");
+
 
 
 
