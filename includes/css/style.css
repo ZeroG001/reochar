@@ -160,6 +160,13 @@ h1 small {
 	float:left;
 	width:660px;
 }
+
+.content .mainbar.photo_content {
+	margin:0;
+	padding:0;
+	float:left;
+	width:960px;
+}
 .content .mainbar h2 {
 	margin-bottom:0;
 	padding-bottom:0;

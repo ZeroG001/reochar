@@ -25,9 +25,9 @@
        $aCode = file_get_contents('https://graph.facebook.com/oauth/access_token?client_id=866515813415087&client_secret=5c19dd551cc00c0003fa196371dde23f&grant_type=client_credentials');
         return $aCode;
       } 
-
       
       $access_token = getAccessToken();
+
       $fields = "id,name,description,link,count"; # ,source - for the actual photo source;
       $fb_page_id = "234249230011385"; # 53249966765 1456387134662284 234249230011385
 
@@ -37,21 +37,29 @@
 
       // $album_count = count($obj['data']);
 
-    
-      $api_call_string = "https://graph.facebook.com/v2.4/".$album_number."/photos/?fields=id,name,images,description&${access_token}";
-      
-      ?>
+    https://graph.facebook.com/v2.4/631299500306354/photos/?fields=id,name,images,description&access_token=866515813415087|LqFm_mD1uClKzfuNwJF2AJG8ndI
+      $api_call_string = "https://graph.facebook.com/v2.4/".$album_number."/photos/?limit=24&fields=id,name,images,description&${access_token}";
+
+      ?>  
 
       <style>
         .image-container img {
           max-width: 100%;
           height: auto;
-
-          border: 5px solid black;
+          max-height: 189px;
+          box-shadow: 1px 1px 5px gray;
+        
           box-sizing: border-box;
 
           margin-bottom: 10px;
         }
+
+        @media screen and (max-width: 994px) {
+          .image-container img {
+            max-height: initial;
+          }
+        }
+
       </style>
 
 </head>
@@ -125,7 +133,7 @@
 
     <div class="content">
       <div class="content_resize">
-        <div class="mainbar">
+        <div class="mainbar photo_content">
           <div class="article">
 
             <h2><span>Photos</span></h2>
@@ -139,6 +147,8 @@
                   margin-bottom: 5px;
                 }
 
+
+
             </style>
 
 
@@ -149,7 +159,7 @@
                 <!-- Images will be loaded here -->
               </div>
 
-              <section class="wow slideInLeft">Next</section>
+              <section class="wow"></section>
 
             </div>
 
@@ -159,20 +169,7 @@
 
         </div>
 
-        <div class="sidebar">
-          <div class="gadget">
-            <h2 class="star">Upcoming Events</h2>
-
-            <!-- Load Sidebar from one spot -->
-  
-            <!-- Script End -->
-
-            <h2> Photos go here </h2>
-
-
-          </div>
-
-        </div>
+        
         <div class="clr"></div>
 
       </div>
@@ -218,7 +215,7 @@
 <script> 
 
 
-var ajax_response;
+
 
 $('#footer').load("charity_site_bottom_frame.htm");
 $('.gadget').load("layout_sidebar_right.html");
@@ -250,57 +247,60 @@ function fb_show_images(url, target_element) {
     url: url,
     success : function(response) {
 
-      var wow = new WOW(
-  {
-    boxClass:     'wow',      // animated element css class (default is wow)
-    animateClass: 'animated', // animation css class (default is animated)
-    offset:       0,          // distance to the element when triggering the animation (default is 0)
-    mobile:       true,       // trigger animations on mobile devices (default is true)
-    live:         true,       // act on asynchronously loaded content (default is true)
-    callback:     function(box) {
 
-      if (response.paging.next) {
-        fb_show_images(response.paging.next, target_element);
+      photo_album_html = "";
+      console.log(response.data);
+
+      for (i = 0; i < response.data.length; i++) {
+
+        
+
+        if(i % 3 == 0) {
+          photo_album_html += "<a href='"+response.data[i].images[0].source+"'><div class='row'> <img class='col-sm-12 col-md-4 col-lg-4' src='"+response.data[i].images[2].source+"' /> </a>";
+        }
+
+
+        else if(i % 3 > 0 && i % 3 < 2) {
+          photo_album_html += "<a href='"+response.data[i].images[0].source+"'><img class='col-sm-12 col-md-4 col-lg-4' src='"+response.data[i].images[2].source+"' /> </a> ";
+        }
+
+
+        else if(i % 3 >= 2) {
+          photo_album_html += "<a href='"+response.data[i].images[0].source+"'><img class='col-sm-12 col-md-4 col-lg-4' src='"+response.data[i].images[2].source+"' /> </a> </div> "
+        }
+
+
+        if(i + 1 == response.data.length ) {
+          console.log("last one");
+          $(target_element).append(photo_album_html);
+        }
+
       }
+
+      var wow = new WOW({
+        boxClass:     'wow',
+        nimateClass: 'animated',
+        offset:       0,
+        mobile:       true,
+        live:         true,       
+        callback:     function(box) {
+
+                        if (response.paging.next) {
+                          fb_show_images(response.paging.next, target_element);
+                        }
       
-      // the callback is fired every time an animation is started
-      // the argument that is passed in is the DOM node being animated
-    }
-  });
-        wow.init();
+                      }
+       }); // Wow.js end
 
-        $('.load-more').unbind("click");
-        $('.load-more').click(function(){
-       
-         
-        });
+          wow.init();
 
-        // Present Each Photo ontot the page
-        forEach(response.data, function(picture) {
-          $(target_element).append("<img src='"+picture.images[0].source+"' />");
+    } // Sucess reponse end
+  
+  }); // Ajax End
 
-        });
-        // =====================================
-    }
-
-  });
-
-}
+} // Function end
 
 
-var wow = new WOW(
-  {
-    boxClass:     'wow',      // animated element css class (default is wow)
-    animateClass: 'animated', // animation css class (default is animated)
-    offset:       0,          // distance to the element when triggering the animation (default is 0)
-    mobile:       true,       // trigger animations on mobile devices (default is true)
-    live:         true,       // act on asynchronously loaded content (default is true)
-    callback:     function(box) {
-      alert('you scrolled me');
-      // the callback is fired every time an animation is started
-      // the argument that is passed in is the DOM node being animated
-    }
-  });
 
 
 // Initialze the page loading function

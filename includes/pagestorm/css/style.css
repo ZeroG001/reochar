@@ -179,9 +179,13 @@ h1 small {
 	background:#fff;
 	border:1px solid #8b8b8b;
 }
-.content .mainbar .article {
+.content .mainbar .article{
 	margin:0 0 32px;
 	padding:0 0 0 20px;
+}
+.content .mainbar .article.photo_content {
+	margin:0 0 32px;
+	padding:0 20px 0 20px;
 }
 .content .mainbar .post_content {
 	float:right;
@@ -194,6 +198,9 @@ h1 small {
 	padding:0;
 	float:right;
 	width:260px;
+}
+.content .photo_content {
+	width:100%;
 }
 .content .sidebar .gadget {
 	margin:0 0 12px;
