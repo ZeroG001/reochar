@@ -18,6 +18,8 @@
 
       if($_SERVER['REQUEST_METHOD'] == "GET" && isset($_GET['album_num'])) {
         $album_number = $_GET['album_num'];
+      } else {
+        header("location:http://10.9.63.84/reochar/albums.php");
       }
 
 
@@ -26,10 +28,10 @@
         return $aCode;
       } 
       
-      $access_token = getAccessToken();
+     # $access_token = getAccessToken();
 
-      $fields = "id,name,description,link,count"; # ,source - for the actual photo source;
-      $fb_page_id = "234249230011385"; # 53249966765 1456387134662284 234249230011385
+     # $fields = "id,name,description,link,count"; # ,source - for the actual photo source;
+     # $fb_page_id = "234249230011385"; # 53249966765 1456387134662284 234249230011385
 
       // $json_link = "http://graph.facebook.com/v2.4/${fb_page_id}/albums?fields=${fields}&access_token=${access_token}";
       // $json = file_get_contents($json_link);
@@ -37,8 +39,8 @@
 
       // $album_count = count($obj['data']);
 
-    https://graph.facebook.com/v2.4/631299500306354/photos/?fields=id,name,images,description&access_token=866515813415087|LqFm_mD1uClKzfuNwJF2AJG8ndI
-      $api_call_string = "https://graph.facebook.com/v2.4/".$album_number."/photos/?limit=24&fields=id,name,images,description&${access_token}";
+      # https://graph.facebook.com/v2.4/631299500306354/photos/?fields=id,name,images,description&access_token=866515813415087|LqFm_mD1uClKzfuNwJF2AJG8ndI
+      #$api_call_photos = "https://graph.facebook.com/v2.4/".$album_number."/photos/?limit=15&fields=id,name,images,description&${access_token}";
 
       ?>  
 
@@ -215,22 +217,14 @@
 <script> 
 
 
+var album_number = "497119670391005" // From get request
+var access_token = "access_token=866515813415087|LqFm_mD1uClKzfuNwJF2AJG8ndI"; // This comes calling oauth access token
+var photo_api_url = "https://graph.facebook.com/v2.4/"+album_number+"/photos/?limit=15&fields=id,name,images,description&"+access_token+"";
+
 
 
 $('#footer').load("charity_site_bottom_frame.htm");
 $('.gadget').load("layout_sidebar_right.html");
- var call_string = '<?php echo $api_call_string ?>';
-
-function forEach(arr, callback) {
-
-    for (i = 0; i < arr.length; i++) {
-      callback(arr[i]);
-    }
-
-}
-
-
-
 
 // Function fb_show_images(Load Images(url, target)
 // Get Images via ajax
@@ -239,8 +233,7 @@ function forEach(arr, callback) {
 
 function fb_show_images(url, target_element) {
 
-  console.log("running show images");
-
+  
   $.ajax({
 
     method: "GET",
@@ -249,7 +242,6 @@ function fb_show_images(url, target_element) {
 
 
       photo_album_html = "";
-      console.log(response.data);
 
       for (i = 0; i < response.data.length; i++) {
 
@@ -259,11 +251,9 @@ function fb_show_images(url, target_element) {
           photo_album_html += "<a href='"+response.data[i].images[0].source+"'><div class='row'> <img class='col-sm-12 col-md-4 col-lg-4' src='"+response.data[i].images[2].source+"' /> </a>";
         }
 
-
         else if(i % 3 > 0 && i % 3 < 2) {
           photo_album_html += "<a href='"+response.data[i].images[0].source+"'><img class='col-sm-12 col-md-4 col-lg-4' src='"+response.data[i].images[2].source+"' /> </a> ";
         }
-
 
         else if(i % 3 >= 2) {
           photo_album_html += "<a href='"+response.data[i].images[0].source+"'><img class='col-sm-12 col-md-4 col-lg-4' src='"+response.data[i].images[2].source+"' /> </a> </div> "
@@ -271,7 +261,7 @@ function fb_show_images(url, target_element) {
 
 
         if(i + 1 == response.data.length ) {
-          console.log("last one");
+          
           $(target_element).append(photo_album_html);
         }
 
@@ -301,12 +291,8 @@ function fb_show_images(url, target_element) {
 } // Function end
 
 
-
-
 // Initialze the page loading function
-fb_show_images(call_string, ".image-container");
-
-
+fb_show_images(photo_api_url, ".image-container");
 
 
 </script>
