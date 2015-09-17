@@ -56,6 +56,10 @@
           margin-bottom: 10px;
         }
 
+        .image-modal {
+          position: 
+        }
+
         @media screen and (max-width: 994px) {
           .image-container img {
             max-height: initial;
@@ -161,6 +165,14 @@
                 <!-- Images will be loaded here -->
               </div>
 
+              <div class="image-modal">
+
+                <div class="stage">
+
+                </div>
+                
+              </div>
+
               <section class="wow"></section>
 
             </div>
@@ -231,6 +243,9 @@ $('.gadget').load("layout_sidebar_right.html");
 // then outputs in the images in the target area
 // Requirements. you need an element called load-more
 
+var photo_array = [];
+var photo_index = 0;
+
 function fb_show_images(url, target_element) {
 
   
@@ -238,6 +253,7 @@ function fb_show_images(url, target_element) {
 
     method: "GET",
     url: url,
+    async: true,
     success : function(response) {
 
 
@@ -248,16 +264,20 @@ function fb_show_images(url, target_element) {
         
 
         if(i % 3 == 0) {
-          photo_album_html += "<a href='"+response.data[i].images[0].source+"'><div class='row'> <img class='col-sm-12 col-md-4 col-lg-4' src='"+response.data[i].images[2].source+"' /> </a>";
+          photo_album_html += "<div class='row'> <a class='album_photo' data-photo-index="+photo_index+" href='"+response.data[i].images[2].source+"'> <img class='col-sm-12 col-md-4 col-lg-4' src='"+response.data[i].images[2].source+"' /> </a>";
         }
 
         else if(i % 3 > 0 && i % 3 < 2) {
-          photo_album_html += "<a href='"+response.data[i].images[0].source+"'><img class='col-sm-12 col-md-4 col-lg-4' src='"+response.data[i].images[2].source+"' /> </a> ";
+          photo_album_html += "<a class='album_photo' data-photo-index="+photo_index+" href='"+response.data[i].images[2].source+"'><img class='col-sm-12 col-md-4 col-lg-4' src='"+response.data[i].images[2].source+"' /> </a> ";
         }
 
         else if(i % 3 >= 2) {
-          photo_album_html += "<a href='"+response.data[i].images[0].source+"'><img class='col-sm-12 col-md-4 col-lg-4' src='"+response.data[i].images[2].source+"' /> </a> </div> "
+          photo_album_html += "<a class='album_photo' data-photo-index="+photo_index+" href='"+response.data[i].images[2].source+"'><img class='col-sm-12 col-md-4 col-lg-4' src='"+response.data[i].images[2].source+"' /> </a> </div> "
         }
+
+        photo_index++;
+        
+        photo_array[i] = response.data[i].images[0].source;
 
 
         if(i + 1 == response.data.length ) {
@@ -266,6 +286,15 @@ function fb_show_images(url, target_element) {
         }
 
       }
+
+
+      $('.album_photo').click(function(event){
+        event.preventDefault();
+        photo_item_index = $(this).attr("data-photo-index");
+        alert(photo_array[photo_item_index]);
+      });
+
+
 
       var wow = new WOW({
         boxClass:     'wow',
@@ -290,9 +319,12 @@ function fb_show_images(url, target_element) {
 
 } // Function end
 
+ 
 
 // Initialze the page loading function
 fb_show_images(photo_api_url, ".image-container");
+
+
 
 
 </script>
