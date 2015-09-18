@@ -8,11 +8,17 @@
     <link rel="stylesheet" type="text/css" href="includes/css/bootstrap/css/bootstrap.min.css">
     <link href="includes/pagestorm/css/style.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="includes/pagestorm/css/coin-slider.css" />
-    <link rel="stylesheet" type="text/css" href="includes/css/main.css"
-    <script type="text/javascript" src="includes/pagestorm/js/cufon-yui.js"></script>
-    <script type="text/javascript" src="includes/pagestorm/js/cufon-marketingscript.js"></script>
+    <link rel="stylesheet" type="text/css" href="includes/css/main.css" />
+    <!--
+      <script type="text/javascript" src="includes/pagestorm/js/cufon-yui.js"></script>
+      <script type="text/javascript" src="includes/pagestorm/js/cufon-marketingscript.js"></script>
+    -->
     <script type="text/javascript" src="includes/pagestorm/js/jquery-1.4.2.min.js"></script>
-    <script type="text/javascript" src="includes/pagestorm/js/script.js"></script>
+
+    <!--
+      <script type="text/javascript" src="includes/pagestorm/js/script.js"></script>
+    -->
+
     <script type="text/javascript" src="includes/pagestorm/js/coin-slider.min.js"></script>
 
     <?php
@@ -24,48 +30,12 @@
 
       
       $access_token = getAccessToken();
-      $fields = "id,name,count,cover_photo{source}"; # ,source - for the actual photo source;
-      $fb_page_id = "234249230011385"; # 53249966765 1456387134662284 234249230011385
-
-      $ch = curl_init();
-      curl_setopt($ch, CURLOPT_URL, "https://graph.facebook.com/v2.4/${fb_page_id}/albums?fields=${fields}&${access_token}");
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-      $json = curl_exec($ch);
-      curl_close($ch);
-
-      $results = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
 
     ?>
 
 </head>
 
 <body>
-
-  <script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '866515813415087',
-      xfbml      : true,
-      version    : 'v2.4'
-    });
-    
-      console.log("<?php echo $access_token ?>");
-      FB.api('234249230011385/albums?fields=id,name,count,cover_photo{source}&<?php echo $access_token ?>', function(response){
-    console.log(response);
-  });
-  };
-
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-
-
-
-  </script>
 
 
   <div class="main">
@@ -98,26 +68,7 @@
 
         <div class="slider">
 
-       <!--    <div id="coin-slider"> 
 
-            <a href="#">
-              <img src="images/group2.jpg" width="960" height="360" alt="" />
-              <span><big>Goodness</big><br />
-              "Goodness is the only investment that never fails." ~ Henry David Thoreau.</span>
-            </a> 
-
-            <a href="#">
-              <img src="images/participants2.jpg" width="960" height="360" alt="" />
-              <span><big>Kindness</big><br />
-              "No act of kindness, no matter how small, is every wasted." ~ Aesop.</span>
-            </a> 
-
-            <a href="#"><img  src="images/big group.jpg"width="960" height="360" alt="" />
-              <span><big>Change</big><br />
-              "You must be the change you wish to see in the world." ~ Mahatma Gandhi</span>
-            </a>
-
-          </div> <!-- Coin Slider End -->
 
           <div class="clr"></div>
 
@@ -144,31 +95,8 @@
               <!-- Place Content Here -->
 
               <div class="container-fluid">
-              <?php 
-
-                foreach($results['data'] as $album ) {
-
-                    echo "
-                        <div class='album-wrapper'>
-
-                          <a href='photos.php?album_num=" . $album['id'] . "'> 
-
-                            <div class='album-text'> 
-                              <h2>" . $album['name'] . "</h2>
-                              <h3> ".$album['count']." Photos </h3>
-                            </div>
-
-                            <img src='" .$album['cover_photo']['source']. "' class='album-cover-photo responsive'/>
-                         
-                          </a>
-
-                        </div>";
-
-                  }
-
-                  
-              ?>
-
+                    
+                    <!-- Using Javascript to load album data -->
 
               <!-- end place content -->
               </div>
@@ -176,21 +104,21 @@
             </div>
 
             <div class="clr"></div>
+
+            <section class="wow">
+              <!-- When you scroll to this point, it shows the next slide -->
+            </section>
+
           </div>
 
         </div>
 
         <div class="sidebar">
           <div class="gadget">
+
+            <!-- Using Javascript to load this section -->
             <h2 class="star">Upcoming Events</h2>
 
-            <!-- Load Sidebar from one spot -->
-            <script type="text/javascript">
-            (function(){
-              $('.gadget').load("layout_sidebar_right.html");
-            })();
-            </script>
-            <!-- Script End -->
 
             <h2> Photos go here </h2>
 
@@ -222,14 +150,128 @@
     </div>
 
     <!-- Footer with Navigation -->
+
     <div id="footer">
-      <script type="text/javascript">
-      ( function(){ $('#footer').load("charity_site_bottom_frame.htm"); })();
-      </script>
+      <!-- Footer inluded with javascript -->
     </div>
-<!-- Footer End --> 
+
+    <!-- Footer End --> 
 
   </div> <!-- Main -->
 
 </body>
 </html>
+
+<script type="text/javascript" src="includes/pagestorm/js/cufon-yui.js"></script>
+<script type="text/javascript" src="includes/pagestorm/js/cufon-marketingscript.js"></script>
+<script type="text/javascript" src="includes/pagestorm/js/script.js"></script>
+<script type="text/javascript" src="includes/pagestorm/js/coin-slider.min.js"></script>
+<script type="text/javascript" src="includes/js/wow.min.js"> </script>
+<script> 
+
+
+
+facebook_pages = {
+  "test" : "1456387134662284",
+  "reochar" : "234249230011385"
+}
+//Facebook Page number
+
+var page_number = facebook_pages.reochar;
+
+// From get request
+var album_number = "497119670391005"
+
+// This comes calling oauth access token from PHP web server. 
+var access_token = "<?php echo $access_token ?>"; 
+
+var album_api_url = "https://graph.facebook.com/v2.4/"+page_number+"/albums?&fields=id,name,count,cover_photo{source}&"+access_token+"";
+
+
+$('#footer').load("charity_site_bottom_frame.htm");
+$('.gadget').load("layout_sidebar_right.html");
+
+// Function fb_show_images(Load Images(url, target)
+// Get Images via ajax
+// then outputs in the images in the target area
+// Requirements. you need an element called load-more
+
+var photo_array = [];
+var photo_index = 0;
+
+function fb_show_images(url, target_element) {
+
+  
+  $.ajax({
+
+    method: "GET",
+    url: url,
+    async: true,
+    success : function(response) {
+
+      console.log(response.data[0]);
+
+      album_html = "";
+
+      for (i = 0; i < response.data.length; i++) {
+
+        album_html += "<div class='album-wrapper'>";
+        album_html += "<a href='photos.php?album_num=" + response.data[i].id + "'>";
+        album_html += "<div class='album-text'>";
+        album_html += "<h2>"+ response.data[i].name +"</h2>";
+        album_html += "<h3> "+ response.data[i].count +" Photos </h3>";
+        album_html += "</div>";
+        album_html += " <img src='"+response.data[i].cover_photo.source+"' class='album-cover-photo responsive'/>";
+        album_html += "</a>";
+        album_html += "</div>";
+
+
+        // At the last iteration of the loop append the items
+        if(i + 1 == response.data.length ) {
+          
+          $(target_element).append(album_html);
+
+        }
+
+      }
+
+      // }
+
+
+      $('.album_photo').click(function(event) {
+        event.preventDefault();
+        photo_item_index = $(this).attr("data-photo-index");
+        alert(photo_array[photo_item_index]);
+      });
+
+
+
+      var wow = new WOW({
+        boxClass:     'wow',
+        nimateClass: 'animated',
+        offset:       0,
+        mobile:       true,
+        live:         true,       
+        callback:     function(box) {
+
+                        if (response.paging.next) {
+                          fb_show_images(response.paging.next, target_element);
+                        }
+      
+                      }
+      }); // Wow.js end
+
+          wow.init();
+
+    } // Sucess reponse end
+  
+  }); // Ajax End
+
+} // Function end
+
+ 
+
+// Initialze the page loading function
+fb_show_images(album_api_url, ".container-fluid");
+
+</script>

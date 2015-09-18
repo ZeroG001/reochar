@@ -45,6 +45,10 @@
       ?>  
 
       <style>
+
+        body {
+          overflow: hidden;
+        }
         .image-container img {
           max-width: 100%;
           height: auto;
@@ -56,8 +60,50 @@
           margin-bottom: 10px;
         }
 
+
+
+        .vertical-center {
+          display: inline-block;
+          height: 100%;
+          vertical-align: middle;
+        }
+
+
         .image-modal {
-          position: 
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          position: fixed;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0,0,0,0.7);
+          text-align: center;
+          overflow: scroll
+        }
+
+        .image-stage {
+          position: relative;
+          display: inline-block;
+          background-color: white;
+          width: 80%;
+          height: 80%;
+          max-height: 900px;
+          max-width: 900px;
+          min-width: 300px;
+          min-height: 300px;
+        } 
+
+        .image-stage img {
+
+          position: relative;
+          background: red;
+          vertical-align: middle;
+          min-height: 300px;
+          max-width: 100%;
+          height: 100%;
+
+          
         }
 
         @media screen and (max-width: 994px) {
@@ -146,16 +192,7 @@
 
             <div class="clr"></div>
 
-            <!-- Remove this afterwards -->
-            <style>
-
-                .post_content img {
-                  margin-bottom: 5px;
-                }
-
-
-
-            </style>
+  
 
 
 
@@ -165,15 +202,21 @@
                 <!-- Images will be loaded here -->
               </div>
 
+
               <div class="image-modal">
 
-                <div class="stage">
+                <div class="vertical-center"> </div>
 
+                <div class="image-stage">
+                  <div class="vertical-center"> </div>
+                  <img src="http://placehold.it/900x900" />
                 </div>
                 
               </div>
 
-              <section class="wow"></section>
+              <section class="wow">
+                <!-- When you scroll to this point, it shows the next slide -->
+              </section>
 
             </div>
 
@@ -229,8 +272,12 @@
 <script> 
 
 
-var album_number = "497119670391005" // From get request
-var access_token = "access_token=866515813415087|LqFm_mD1uClKzfuNwJF2AJG8ndI"; // This comes calling oauth access token
+// From get request
+var album_number = "497119670391005"
+
+// This comes calling oauth access token from PHP web server. 
+var access_token = "access_token=866515813415087|LqFm_mD1uClKzfuNwJF2AJG8ndI"; 
+
 var photo_api_url = "https://graph.facebook.com/v2.4/"+album_number+"/photos/?limit=15&fields=id,name,images,description&"+access_token+"";
 
 
@@ -289,9 +336,12 @@ function fb_show_images(url, target_element) {
 
 
       $('.album_photo').click(function(event){
+
         event.preventDefault();
         photo_item_index = $(this).attr("data-photo-index");
         alert(photo_array[photo_item_index]);
+
+
       });
 
 
