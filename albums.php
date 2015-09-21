@@ -178,7 +178,7 @@ facebook_pages = {
 }
 //Facebook Page number
 
-var page_number = facebook_pages.test;
+var page_number = facebook_pages.reochar;
 
 // From get request
 var album_number = "497119670391005"

@@ -50,34 +50,30 @@
           /*overflow: hidden;*/
         }
 
+        i {
+            background-position: 50%;
+            background-size: cover;
+            display: block;
+            width: 100%;
+            height: 200px;
+            margin: 0px auto;
+            border: 1px solid red;
+        }
 
-      .box {
-          position: relative;
-          background-image: url(https://fbcdn-photos-g-a.akamaihd.net/hphotos-ak-xfp1/v/t1.0-0/p320x320/11012054_616565411779763_5658846813831304714_n.jpg?oh=fc97a07526b8819fce7293485a1dc454&oe=569DBA5A&__gda__=1452837482_fb9bf18a9865e52cf9e267ac966e80dc);
-           background-position: center; 
+
+        .image-links {
+          height: 250px;
+          background-position: center;
           background-size: cover;
-          border: 1px solid red;
-          width: 250px;
-          height: 190px;
-      }
-
-      .image-links {
-        height: 250px;
-        background-position: center;
-        background-size: cover;
-      }
+        }
 
 
-      .album_photo {
+        .album_photo {
 
-        height: 170px;
-        background-size: cover;
-        background-position: center; 
-      }
-
-
-  
-
+          height: 170px;
+          background-size: cover;
+          background-position: center; 
+        }
 
 
         .vertical-center {
@@ -119,15 +115,8 @@
           vertical-align: middle;
           min-height: 300px;
           max-width: 100%;
-          height: 100%;
-
-          
+          height: 100%;      
         }
-
-
-
-
-
 
 
       </style>
@@ -295,7 +284,8 @@
 
 
 // From get request
-var album_number = '1484399428527721';
+// 616565195113118 bike photos
+var album_number = '616565195113118';
 
 // This comes calling oauth access token from PHP web server. 
 var access_token = "access_token=866515813415087|LqFm_mD1uClKzfuNwJF2AJG8ndI"; 
@@ -330,19 +320,19 @@ function fb_show_images(url, target_element) {
       photo_album_html = "";
 
       for (i = 0; i < response.data.length; i++) {
-
+        console.log("iteration " + i);
         // response.data[i].images[2].source
 
         if(i % 3 == 0) {
-          photo_album_html += "<div class='row'> <a href='"+response.data[i].images[0].source+"' class='col-sm-4 col-md-4 col-lg-4 image-links' style='background-image: url("+response.data[i].images[2].source+")'> </a>";
+          photo_album_html += "<div class='row'> <div class='col-xs-4 col-sm-4 col-md-4 col-lg-4'> <i style='background-image: url("+response.data[i].images[2].source+")'> </i> </div>";
         }
 
         else if(i % 3 > 0 && i % 3 < 2) {
-          photo_album_html += "<a href='"+response.data[i].images[0].source+"' class='col-sm-4 col-md-4 col-lg-4 image-links' style='background-image: url("+response.data[i].images[2].source+")'> </a> ";
+          photo_album_html += "<div class='col-xs-4 col-sm-4 col-md-4 col-lg-4'> <i style='background-image: url("+response.data[i].images[2].source+")'> </i> </div>";
         }
 
         else if(i % 3 >= 2) {
-          photo_album_html += "<a href='"+response.data[i].images[0].source+"' class='col-sm-4 col-md-4 col-lg-4 image-links' style='background-image: url("+response.data[i].images[2].source+")'> </a> </div> "
+          photo_album_html += "<div class='col-xs-4 col-sm-4 col-md-4 col-lg-4'> <i style='background-image: url("+response.data[i].images[2].source+")''> </i> </div> </div> "
         }
 
 
@@ -380,7 +370,7 @@ function fb_show_images(url, target_element) {
                       }
       }); // Wow.js end
 
-          wow.init();
+          // wow.init();
 
     } // Sucess response end
   
