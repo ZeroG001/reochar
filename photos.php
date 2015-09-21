@@ -61,6 +61,13 @@
           height: 190px;
       }
 
+      .image-links {
+        height: 250px;
+        background-position: center;
+        background-size: cover;
+      }
+
+
       .album_photo {
 
         height: 170px;
@@ -69,16 +76,7 @@
       }
 
 
-        .image-container img {
-          max-width: 100%;
-          height: auto;
-          max-height: 189px;
-          box-shadow: 1px 1px 5px gray;
-        
-          box-sizing: border-box;
-
-          margin-bottom: 10px;
-        }
+  
 
 
 
@@ -130,11 +128,7 @@
 
 
 
-        @media screen and (max-width: 994px) {
-          .image-container img {
-            max-height: initial;
-          }
-        }
+
 
       </style>
 
@@ -337,23 +331,19 @@ function fb_show_images(url, target_element) {
 
       for (i = 0; i < response.data.length; i++) {
 
-        
+        // response.data[i].images[2].source
 
         if(i % 3 == 0) {
-          photo_album_html += "<div class='row'> <a class='album_photo col-xs-4 col-sm-4 col-md-4 col-lg-4' style='background-image: url("+response.data[i].images[2].source+");' data-photo-index="+photo_index+" href='"+response.data[i].images[2].source+"'> </a> </div>";
+          photo_album_html += "<div class='row'> <a href='"+response.data[i].images[0].source+"' class='col-sm-4 col-md-4 col-lg-4 image-links' style='background-image: url("+response.data[i].images[2].source+")'> </a>";
         }
 
         else if(i % 3 > 0 && i % 3 < 2) {
-          photo_album_html += " <a class='album_photo col-xs-4 col-sm-4 col-md-4 col-lg-4' style='background-image: url("+response.data[i].images[2].source+");' data-photo-index="+photo_index+" href='"+response.data[i].images[2].source+"'> </a> ";
+          photo_album_html += "<a href='"+response.data[i].images[0].source+"' class='col-sm-4 col-md-4 col-lg-4 image-links' style='background-image: url("+response.data[i].images[2].source+")'> </a> ";
         }
 
         else if(i % 3 >= 2) {
-          photo_album_html += "<a class='album_photo album_photo col-xs-4 col-sm-4 col-md-4 col-lg-4' style='background-image: url("+response.data[i].images[2].source+");' data-photo-index="+photo_index+" href='"+response.data[i].images[2].source+"'> </div>";
+          photo_album_html += "<a href='"+response.data[i].images[0].source+"' class='col-sm-4 col-md-4 col-lg-4 image-links' style='background-image: url("+response.data[i].images[2].source+")'> </a> </div> "
         }
-
-        photo_index++;
-        
-        photo_array[i] = response.data[i].images[0].source;
 
 
         if(i + 1 == response.data.length ) {
