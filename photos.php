@@ -19,7 +19,7 @@
       if($_SERVER['REQUEST_METHOD'] == "GET" && isset($_GET['album_num'])) {
         $album_number = $_GET['album_num'];
       } else {
-        header("location:http://10.9.63.84/reochar/albums.php");
+        # header("location:http://10.9.63.84/reochar/albums.php");
       }
 
 
@@ -47,8 +47,28 @@
       <style>
 
         body {
-          overflow: hidden;
+          /*overflow: hidden;*/
         }
+
+
+      .box {
+          position: relative;
+          background-image: url(https://fbcdn-photos-g-a.akamaihd.net/hphotos-ak-xfp1/v/t1.0-0/p320x320/11012054_616565411779763_5658846813831304714_n.jpg?oh=fc97a07526b8819fce7293485a1dc454&oe=569DBA5A&__gda__=1452837482_fb9bf18a9865e52cf9e267ac966e80dc);
+           background-position: center; 
+          background-size: cover;
+          border: 1px solid red;
+          width: 250px;
+          height: 190px;
+      }
+
+      .album_photo {
+
+        height: 170px;
+        background-size: cover;
+        background-position: center; 
+      }
+
+
         .image-container img {
           max-width: 100%;
           height: auto;
@@ -105,6 +125,10 @@
 
           
         }
+
+
+
+
 
         @media screen and (max-width: 994px) {
           .image-container img {
@@ -203,7 +227,7 @@
               </div>
 
 
-              <div class="image-modal">
+<!--               <div class="image-modal">
 
                 <div class="vertical-center"> </div>
 
@@ -213,11 +237,11 @@
                 </div>
                 
               </div>
+ -->
 
-              <section class="wow">
-                <!-- When you scroll to this point, it shows the next slide -->
-              </section>
-
+              <div class="wow"> 
+                Images will be loaded once the users scrolls here
+              </div>
             </div>
 
 
@@ -260,6 +284,10 @@
 
 
 </div> <!-- Main -->
+    <section class="wow">
+                Hello this is a test
+                <!-- When you scroll to this point, it shows the next slide -->
+              </section>
 </body>
 </html>
 
@@ -273,7 +301,7 @@
 
 
 // From get request
-var album_number = "497119670391005"
+var album_number = '1484399428527721';
 
 // This comes calling oauth access token from PHP web server. 
 var access_token = "access_token=866515813415087|LqFm_mD1uClKzfuNwJF2AJG8ndI"; 
@@ -302,7 +330,8 @@ function fb_show_images(url, target_element) {
     url: url,
     async: true,
     success : function(response) {
-
+      $('.wow').removeClass('animated');
+      console.log(response);
 
       photo_album_html = "";
 
@@ -311,15 +340,15 @@ function fb_show_images(url, target_element) {
         
 
         if(i % 3 == 0) {
-          photo_album_html += "<div class='row'> <a class='album_photo' data-photo-index="+photo_index+" href='"+response.data[i].images[2].source+"'> <img class='col-sm-12 col-md-4 col-lg-4' src='"+response.data[i].images[2].source+"' /> </a>";
+          photo_album_html += "<div class='row'> <a class='album_photo col-xs-4 col-sm-4 col-md-4 col-lg-4' style='background-image: url("+response.data[i].images[2].source+");' data-photo-index="+photo_index+" href='"+response.data[i].images[2].source+"'> </a> </div>";
         }
 
         else if(i % 3 > 0 && i % 3 < 2) {
-          photo_album_html += "<a class='album_photo' data-photo-index="+photo_index+" href='"+response.data[i].images[2].source+"'><img class='col-sm-12 col-md-4 col-lg-4' src='"+response.data[i].images[2].source+"' /> </a> ";
+          photo_album_html += " <a class='album_photo col-xs-4 col-sm-4 col-md-4 col-lg-4' style='background-image: url("+response.data[i].images[2].source+");' data-photo-index="+photo_index+" href='"+response.data[i].images[2].source+"'> </a> ";
         }
 
         else if(i % 3 >= 2) {
-          photo_album_html += "<a class='album_photo' data-photo-index="+photo_index+" href='"+response.data[i].images[2].source+"'><img class='col-sm-12 col-md-4 col-lg-4' src='"+response.data[i].images[2].source+"' /> </a> </div> "
+          photo_album_html += "<a class='album_photo album_photo col-xs-4 col-sm-4 col-md-4 col-lg-4' style='background-image: url("+response.data[i].images[2].source+");' data-photo-index="+photo_index+" href='"+response.data[i].images[2].source+"'> </div>";
         }
 
         photo_index++;
@@ -344,26 +373,26 @@ function fb_show_images(url, target_element) {
 
       });
 
-
-
       var wow = new WOW({
         boxClass:     'wow',
-        nimateClass: 'animated',
+        animateClass: 'animated',
         offset:       0,
         mobile:       true,
         live:         true,       
         callback:     function(box) {
 
-                        if (response.paging.next) {
+                        if (response.paging.next === undefined) {
+                          return false;
+                        } else {
                           fb_show_images(response.paging.next, target_element);
                         }
       
                       }
-       }); // Wow.js end
+      }); // Wow.js end
 
           wow.init();
 
-    } // Sucess reponse end
+    } // Sucess response end
   
   }); // Ajax End
 

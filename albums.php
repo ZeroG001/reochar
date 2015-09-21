@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="includes/css/main.css" />
     <!--
       <script type="text/javascript" src="includes/pagestorm/js/cufon-yui.js"></script>
-      <script type="text/javascript" src="includes/pagestorm/js/cufon-marketingscript.js"></script>
+      <scridpt type="text/javascript" src="includes/pagestorm/js/cufon-marketingscript.js"></script>
     -->
     <script type="text/javascript" src="includes/pagestorm/js/jquery-1.4.2.min.js"></script>
 
@@ -106,6 +106,7 @@
             <div class="clr"></div>
 
             <section class="wow">
+              more
               <!-- When you scroll to this point, it shows the next slide -->
             </section>
 
@@ -177,7 +178,7 @@ facebook_pages = {
 }
 //Facebook Page number
 
-var page_number = facebook_pages.reochar;
+var page_number = facebook_pages.test;
 
 // From get request
 var album_number = "497119670391005"
@@ -215,6 +216,7 @@ function fb_show_images(url, target_element) {
 
       for (i = 0; i < response.data.length; i++) {
 
+        console.log("adding photo item" + i);
         album_html += "<div class='album-wrapper'>";
         album_html += "<a href='photos.php?album_num=" + response.data[i].id + "'>";
         album_html += "<div class='album-text'>";
@@ -248,13 +250,15 @@ function fb_show_images(url, target_element) {
 
       var wow = new WOW({
         boxClass:     'wow',
-        nimateClass: 'animated',
+        animateClass: 'animated',
         offset:       0,
         mobile:       true,
         live:         true,       
         callback:     function(box) {
 
-                        if (response.paging.next) {
+                        if (response.paging.next === undefined) {
+                          return false
+                        } else {
                           fb_show_images(response.paging.next, target_element);
                         }
       
