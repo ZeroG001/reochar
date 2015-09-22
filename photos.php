@@ -55,7 +55,6 @@
             background-size: cover;
             display: block;
             width: 290px;
-            height: 200px;
             margin: 0px auto;
             box-shadow: 1px 1px 5px gray;
             margin-bottom: 15px;
@@ -112,9 +111,8 @@
 
           position: relative;
           display: block;
-          vertical-align: middle;
-          max-width: 100%;
-          height: 100%;  
+          max-width: 550px;
+          max-height: 550px;  
           margin: 0px auto;   
           
         }
@@ -296,6 +294,7 @@
 
 // From get request
 // 616565195113118 bike photos
+// Cool photo 1470046549963009
 var album_number = '616565195113118';
 
 // This comes calling oauth access token from PHP web server. 
@@ -313,133 +312,194 @@ $('.gadget').load("layout_sidebar_right.html");
 // then outputs in the images in the target area
 // Requirements. you need an element called load-more
 
-var photo_array = [];
-var active_index;
-var photo_index = 0;
+var fb = {
+  "thumbnails" :[],
+  "photos" : [],
+  "photo_index" : 0,
+  "active_photo" : 0,
+  "p_next_url" : "",
+  "p_prev_url" : "",
+  "get_images" : function(url) {
 
-function fb_show_images(url, target_element) {
+    $.ajax({
 
-  
-  $.ajax({
+      method: "GET",
+      url: url,
+      async: true,
+      success : function(response) {
 
-    method: "GET",
-    url: url,
-    async: true,
-    success : function(response) {
-      $('.wow').removeClass('animated');
-      console.log(response);
-
-      photo_album_html = "";
-
-      for (i = 0; i < response.data.length; i++) {
-
-        img_medium = response.data[i].images[2].source;
-
-        // response.data[i].images[2].source
-
-        if(i % 3 == 0) {
-          photo_album_html += "<div class='row'> <div class='col-xs-4 col-sm-4 col-md-4 col-lg-4'> <i class='album_photo' data-photo-index="+photo_index+" style='background-image: url("+img_medium+")'> </i> </div>";
+ 
+        for (i = 0; i < response.data.length; i++) {
+          fb.thumbnails.push(response.data[i].images[4].source);
+          fb.photos.push(response.data[i].images[0].source);
         }
 
-        else if(i % 3 > 0 && i % 3 < 2) {
-          photo_album_html += "<div class='col-xs-4 col-sm-4 col-md-4 col-lg-4'> <i class='album_photo' data-photo-index="+photo_index+"  style='background-image: url("+img_medium+")'> </i> </div>";
-        }
+        fb.p_next_url = response.paging.next;
+        
 
-        else if(i % 3 >= 2) {
-          photo_album_html += "<div class='col-xs-4 col-sm-4 col-md-4 col-lg-4'> <i class='album_photo' data-photo-index="+photo_index+" style='background-image: url("+img_medium+")''> </i> </div> </div> "
-        }
-
-        photo_array.push(response.data[i].images[0].source);
-        photo_index++;
+        fb.show_images(response.data, ".image-container");
 
 
-        if(i + 1 == response.data.length ) {
-          
-          $(target_element).append(photo_album_html);
-        }
+        $('.album_photo').unbind("click");
+
+        // Open modal when item is clcked
+        $('.album_photo').click( function(event) {
+
+          selected_index = $(this).attr("data-photo-index");
+          fb.open_modal(selected_index);
+
+        });
+
+
+
+        $(window).scroll(function() {
+
+            if($(window).scrollTop() == $(document).height() - $(window).height()) {
+              console.log("you hit rock bottom");
+              $(window).unbind('scroll');
+            fb.get_images(fb.p_next_url);
+          }
+
+        });
+
+
+      } // Sucess response end
+
+    }); // Ajax End
+
+  },
+  "show_images" : function(arr, target_element) {
+
+
+    photo_album_html = "";
+
+    for (i = 0; i < arr.length; i++) {
+
+      img_url = arr[i].images[2].source;
+
+      // response.data[i].images[2].source
+
+      if(i % 3 == 0) {
+      
+        photo_album_html += "<div class='row'> \
+                              <div class='col-xs-4 col-sm-4 col-md-4 col-lg-4'> \
+                                <i class='album_photo' data-photo-index="+fb.photo_index+" style='background-image: url("+img_url+")'> </i> \
+                              </div>";
 
       }
 
-      // Open modal when item is clcked
-      $('.album_photo').click( function(event) {
+      else if(i % 3 > 0 && i % 3 < 2) {
+        photo_album_html += "<div class='col-xs-4 col-sm-4 col-md-4 col-lg-4'> \
+                                <i class='album_photo' data-photo-index="+fb.photo_index+" style='background-image: url("+img_url+")'> </i> \
+                             </div>";
+      }
 
-        active_index = $(this).attr("data-photo-index");
+      else if(i % 3 >= 2) {
+        photo_album_html += "<div class='col-xs-4 col-sm-4 col-md-4 col-lg-4'> \
+                                <i class='album_photo' data-photo-index="+fb.photo_index+" style='background-image: url("+img_url+")'> </i> \
+                             </div> </div>";
+      }
 
-        current_photo = photo_array[active_index];
-
-        console.log(photo_array[active_index]);
-
-        $('.image-modal').css({
-          "display": "inline"
-        });
-
-        $('.image-stage').append('<img src="'+current_photo+'" />');
+      fb.photo_index = fb.photo_index + 1;
 
 
-      });
+      if(i + 1 == arr.length ) {
+        
+        $(target_element).append(photo_album_html);
 
-      $('#modal-next').click(function(){
+      } // if statement 
+    } //show images loop end
+  },
+  "open_modal" : function(photo_index) {
 
-        if(active_index + 2 > photo_array.length ) {
+    fb.active_photo = parseInt(photo_index);
+
+
+    $('body').css("overflow", "hidden");
+
+
+    //Open the Modal
+    $('.image-modal').css({
+      "display": "inline"
+    });
+
+     $('.image-stage').append('<img src="'+fb.photos[photo_index]+'" />');
+
+
+    // When Next is Clicked. Show the next Photo
+    $('#modal-next').click(function() {
+
+        if(fb.active_photo + 1 > fb.photos.length - 1 ) {
           return false;
         }
 
-        active_index++
+      $('.image-stage img').remove();
+      fb.active_photo = fb.active_photo + 1;
+      $('.image-stage').append('<img src="'+fb.photos[fb.active_photo]+'" />');
+
+    });
+
+    // When Prev is clicked, Show the pervious photo
+    $('#modal-prev').click(function() {
+
+      if(fb.active_photo - 1 < 0 ) {
+        return false;
+      }
+
+      $('.image-stage img').remove();
+      fb.active_photo = fb.active_photo - 1;
+
+      $('.image-stage').append('<img src="'+fb.photos[fb.active_photo]+'" />');
+
+
+      //show the new image end
+    });
+
+    // When Prev is clicked, Show the pervious photo
+    $('#modal-close').click(function(){
+      $('#modal-prev').unbind('click');
+      $('#modal-next').unbind('click');
+
+      $('.image-stage img').remove();
+      $('.image-modal').css("display","none");
+      $('body').css("overflow", "scroll");
+    });
+
+    // When the user clicks outside of the photo. The modal closes
+    $('.image-modal').click(function(e) {
+
+      if($(e.target).is(':not(.image-stage *)')) {
+
+        $('#modal-prev').unbind('click');
+        $('#modal-next').unbind('click');
+
         $('.image-stage img').remove();
-        $('.image-stage').append('<img src="'+photo_array[active_index]+'" />') 
-      });
+        $('.image-modal').css("display","none");
+        $('body').css("overflow", "scroll");
 
-      $('#modal-prev').click(function(){
+      }
 
-        if(active_index - 1 < 0 ) {
-          return false;
-        }
-        active_index--
-        $('.image-stage img').remove();
-        $('.image-stage').append('<img src="'+photo_array[active_index]+'" />') 
-      });
-
-
-      $('#modal-close').click(function() {
-
-        $('.image-stage img').remove();
-        $('.image-modal').css({
-          "display": "none"
-        });
-      
-      });
-
-
-
-      var wow = new WOW({
-        boxClass:     'wow',
-        animateClass: 'animated',
-        offset:       0,
-        mobile:       true,
-        live:         true,       
-        callback:     function(box) {
-
-                        if (response.paging.next === undefined) {
-                          return false;
-                        } else {
-                          fb_show_images(response.paging.next, target_element);
-                        }
-      
-                      }
-      }); // Wow.js end
-
-          // wow.init();
-
-    } // Sucess response end
   
-  }); // Ajax End
+    });
 
-} // Function end
+  }
+} // fb-object end
+
+
+
+
+
+// Problem is wow does not know what to do until the ajax call is finised. therefore its going to crash when it tries to load. 
+// do a wow init when the ajx call is finished
+
+
+      
+
 
  
 
 // Initialze the page loading function
-fb_show_images(photo_api_url, ".image-container");
+fb.get_images(photo_api_url, ".image-container");
 
 
 
