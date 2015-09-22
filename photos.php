@@ -54,10 +54,11 @@
             background-position: 50%;
             background-size: cover;
             display: block;
-            width: 100%;
+            width: 290px;
             height: 200px;
             margin: 0px auto;
-            border: 1px solid red;
+            box-shadow: 1px 1px 5px gray;
+            margin-bottom: 15px;
         }
 
 
@@ -92,30 +93,35 @@
           width: 100%;
           height: 100%;
           background-color: rgba(0,0,0,0.7);
-          text-align: center;
-          overflow: scroll
+          overflow: scroll;
+          display: none;
         }
 
         .image-stage {
           position: relative;
-          display: inline-block;
+          display: block;
           background-color: white;
-          width: 80%;
-          height: 80%;
+          width: 900px;
           max-height: 900px;
           max-width: 900px;
-          min-width: 300px;
-          min-height: 300px;
+          margin: 0px auto;
+          background-color: black;
         } 
 
         .image-stage img {
 
           position: relative;
-          background: red;
+          display: block;
           vertical-align: middle;
-          min-height: 300px;
           max-width: 100%;
-          height: 100%;      
+          height: 100%;  
+          margin: 0px auto;   
+          
+        }
+
+        .modal-nav {
+          display: block;
+          background-color: white;
         }
 
 
@@ -203,29 +209,34 @@
 
 
 
-            <div class='container-fluid'>
 
               <div class='image-container'>
                 <!-- Images will be loaded here -->
               </div>
 
 
-<!--               <div class="image-modal">
+              <div class="image-modal">
 
-                <div class="vertical-center"> </div>
 
                 <div class="image-stage">
-                  <div class="vertical-center"> </div>
-                  <img src="http://placehold.it/900x900" />
+                  <!-- <img src="http://placehold.it/500x500" /> -->
+                <div class="modal-nav">
+                  <button id="modal-next"> Next </button>
+                  <button id="modal-prev"> Previous </button>
+                  <button id="modal-close"> Close </button>
+                </div>
+
+
+                  
                 </div>
                 
               </div>
- -->
+
 
               <div class="wow"> 
                 Images will be loaded once the users scrolls here
               </div>
-            </div>
+      
 
 
             <div class="clr"></div>
@@ -303,6 +314,7 @@ $('.gadget').load("layout_sidebar_right.html");
 // Requirements. you need an element called load-more
 
 var photo_array = [];
+var active_index;
 var photo_index = 0;
 
 function fb_show_images(url, target_element) {
@@ -320,20 +332,25 @@ function fb_show_images(url, target_element) {
       photo_album_html = "";
 
       for (i = 0; i < response.data.length; i++) {
-        console.log("iteration " + i);
+
+        img_medium = response.data[i].images[2].source;
+
         // response.data[i].images[2].source
 
         if(i % 3 == 0) {
-          photo_album_html += "<div class='row'> <div class='col-xs-4 col-sm-4 col-md-4 col-lg-4'> <i style='background-image: url("+response.data[i].images[2].source+")'> </i> </div>";
+          photo_album_html += "<div class='row'> <div class='col-xs-4 col-sm-4 col-md-4 col-lg-4'> <i class='album_photo' data-photo-index="+photo_index+" style='background-image: url("+img_medium+")'> </i> </div>";
         }
 
         else if(i % 3 > 0 && i % 3 < 2) {
-          photo_album_html += "<div class='col-xs-4 col-sm-4 col-md-4 col-lg-4'> <i style='background-image: url("+response.data[i].images[2].source+")'> </i> </div>";
+          photo_album_html += "<div class='col-xs-4 col-sm-4 col-md-4 col-lg-4'> <i class='album_photo' data-photo-index="+photo_index+"  style='background-image: url("+img_medium+")'> </i> </div>";
         }
 
         else if(i % 3 >= 2) {
-          photo_album_html += "<div class='col-xs-4 col-sm-4 col-md-4 col-lg-4'> <i style='background-image: url("+response.data[i].images[2].source+")''> </i> </div> </div> "
+          photo_album_html += "<div class='col-xs-4 col-sm-4 col-md-4 col-lg-4'> <i class='album_photo' data-photo-index="+photo_index+" style='background-image: url("+img_medium+")''> </i> </div> </div> "
         }
+
+        photo_array.push(response.data[i].images[0].source);
+        photo_index++;
 
 
         if(i + 1 == response.data.length ) {
@@ -343,15 +360,56 @@ function fb_show_images(url, target_element) {
 
       }
 
+      // Open modal when item is clcked
+      $('.album_photo').click( function(event) {
 
-      $('.album_photo').click(function(event){
+        active_index = $(this).attr("data-photo-index");
 
-        event.preventDefault();
-        photo_item_index = $(this).attr("data-photo-index");
-        alert(photo_array[photo_item_index]);
+        current_photo = photo_array[active_index];
+
+        console.log(photo_array[active_index]);
+
+        $('.image-modal').css({
+          "display": "inline"
+        });
+
+        $('.image-stage').append('<img src="'+current_photo+'" />');
 
 
       });
+
+      $('#modal-next').click(function(){
+
+        if(active_index + 2 > photo_array.length ) {
+          return false;
+        }
+
+        active_index++
+        $('.image-stage img').remove();
+        $('.image-stage').append('<img src="'+photo_array[active_index]+'" />') 
+      });
+
+      $('#modal-prev').click(function(){
+
+        if(active_index - 1 < 0 ) {
+          return false;
+        }
+        active_index--
+        $('.image-stage img').remove();
+        $('.image-stage').append('<img src="'+photo_array[active_index]+'" />') 
+      });
+
+
+      $('#modal-close').click(function() {
+
+        $('.image-stage img').remove();
+        $('.image-modal').css({
+          "display": "none"
+        });
+      
+      });
+
+
 
       var wow = new WOW({
         boxClass:     'wow',
