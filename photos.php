@@ -100,9 +100,8 @@
           position: relative;
           display: block;
           background-color: white;
-          width: 900px;
-          max-height: 900px;
-          max-width: 900px;
+          width: 90%;
+          min-width: 700px;
           margin: 0px auto;
           background-color: black;
         } 
@@ -111,11 +110,65 @@
 
           position: relative;
           display: block;
-          max-width: 550px;
-          max-height: 550px;  
+          max-width: 80%;
+          min-width: 600px;
+          height: auto;  
           margin: 0px auto;   
           
         }
+
+        #modal-next, #modal-prev {
+          width: 25px;
+          padding: 29px 24px 18px;
+          display: inline-block;
+          width: 25px;
+          height: 60px;
+          color: white;
+          background-color: black;
+          position: absolute;
+          top: 305px;
+          -webkit-transition: 0.2s ease-in;
+          -moz-transition: 0.2s ease-in;
+          -o-transition: 0.2s ease-in;
+          transition: 0.2s ease-in;
+        }
+
+        #modal-next {
+          background-image: url('images/arrow-right.png');
+          background-position: center;
+          right: 0px;
+        }
+
+        #modal-prev {
+          background-image: url('images/arrow-left.png');
+          background-position: center;
+        }
+
+        #modal-close {
+          background-color: red;
+          color: white;
+          border: 0px;
+          height: 60px;
+          padding: 10px;
+          font-size: 1.5rem;
+          text-align: center;
+          font-weight: bold;
+          width: 120px;
+        }
+
+
+
+
+        #modal-next:hover, #modal-prev:hover {
+          background-color: rgba(255,255,255,0.3);
+          -webkit-transition: 0.2s ease-in;
+          -moz-transition: 0.2s ease-in;
+          -o-transition: 0.2s ease-in;
+          transition: 0.2s ease-in;
+        }
+
+
+
 
         .modal-nav {
           display: block;
@@ -217,10 +270,11 @@
 
 
                 <div class="image-stage">
+                <div id="modal-next">  </div>
+                <div id="modal-prev">  </div>
                   <!-- <img src="http://placehold.it/500x500" /> -->
                 <div class="modal-nav">
-                  <button id="modal-next"> Next </button>
-                  <button id="modal-prev"> Previous </button>
+                  
                   <button id="modal-close"> Close </button>
                 </div>
 
@@ -230,11 +284,6 @@
                 
               </div>
 
-
-              <div class="wow"> 
-                Images will be loaded once the users scrolls here
-              </div>
-      
 
 
             <div class="clr"></div>
@@ -276,10 +325,7 @@
 
 
 </div> <!-- Main -->
-    <section class="wow">
-                Hello this is a test
-                <!-- When you scroll to this point, it shows the next slide -->
-              </section>
+
 </body>
 </html>
 
@@ -468,7 +514,7 @@ var fb = {
     // When the user clicks outside of the photo. The modal closes
     $('.image-modal').click(function(e) {
 
-      if($(e.target).is(':not(.image-stage *)')) {
+      if($(e.target).is(':not(.image-stage, .image-stage *)')) {
 
         $('#modal-prev').unbind('click');
         $('#modal-next').unbind('click');
